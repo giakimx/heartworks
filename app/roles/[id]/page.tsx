@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import PageHeader from "@/components/chrome/PageHeader";
+import { VolunteerTopNav } from "@/components/chrome/TopNav";
 import { CalendarIcon, CheckIcon, ExportIcon, PinIcon } from "@/components/icons";
 import InfoTile, { DateTile, IconTile } from "@/components/ui/InfoTile";
 import ProgressBar from "@/components/ui/ProgressBar";
@@ -94,46 +95,49 @@ function RoleView({
     role.minAge ? `Ages ${role.minAge}+` : undefined,
   ].filter(Boolean) as string[];
 
-  return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-5 px-6 pb-8 pt-3">
-      <PageHeader
-        backHref="/discover"
-        backLabel="Back to feed"
-        trailing={
-          <button
-            type="button"
-            aria-label="Share this role"
-            onClick={() => toast("Sharing is coming soon")}
-            className="-mr-2.5 flex size-11 items-center justify-center text-ink"
-          >
-            <ExportIcon size={22} />
-          </button>
-        }
-      />
+  const imageEl = image && (
+    <Image
+      src={image.src}
+      alt={image.alt}
+      width={image.width}
+      height={image.height}
+      priority
+      className="h-[250px] w-full rounded-feature object-cover shadow-photo lg:h-[300px]"
+    />
+  );
 
-      {image && (
-        <Image
-          src={image.src}
-          alt={image.alt}
-          width={image.width}
-          height={image.height}
-          priority
-          className="h-[250px] w-full rounded-feature object-cover shadow-photo"
-        />
-      )}
-
-      <div className="flex flex-col gap-2.5">
-        {org && (
-          <div className="flex items-center gap-2 text-sm font-semibold">
-            <div className="size-[22px] rounded-full" style={{ background: org.color }} />
-            {org.name}
+  const registerCard = hydrated && (
+    <div className="flex flex-col gap-3.5 rounded-card border border-line bg-[rgba(255,255,255,0.8)] p-4 shadow-card">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center">
+          <AvatarStack colors={AVATAR_COLORS.slice(0, Math.min(4, Math.max(filled, 1)))} />
+          <div className="pl-2.5 text-sm font-medium">
+            {filled} of {role.spots} going
           </div>
-        )}
-        <h1 className="font-display text-[32px] font-normal leading-[1.1] tracking-[-0.5px]">
-          {role.title}
-        </h1>
+        </div>
+        <div className="text-[13px] text-muted">{spotsLabel(left)}</div>
       </div>
+      <ProgressBar filled={filled} total={role.spots} />
+      <RegisterActions role={role} org={org} application={application} left={left} />
+    </div>
+  );
 
+  const orgTitle = (
+    <div className="flex flex-col gap-2.5">
+      {org && (
+        <div className="flex items-center gap-2 text-sm font-semibold">
+          <div className="size-[22px] rounded-full" style={{ background: org.color }} />
+          {org.name}
+        </div>
+      )}
+      <h1 className="font-display text-[32px] font-normal leading-[1.1] tracking-[-0.5px] lg:text-[40px]">
+        {role.title}
+      </h1>
+    </div>
+  );
+
+  const content = (
+    <>
       <div className="flex flex-col gap-3.5">
         {role.date && (
           <InfoTile
@@ -154,22 +158,6 @@ function RoleView({
           sub={role.address}
         />
       </div>
-
-      {hydrated && (
-        <div className="flex flex-col gap-3.5 rounded-card border border-line bg-[rgba(255,255,255,0.8)] p-4 shadow-card">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <AvatarStack colors={AVATAR_COLORS.slice(0, Math.min(4, Math.max(filled, 1)))} />
-              <div className="pl-2.5 text-sm font-medium">
-                {filled} of {role.spots} going
-              </div>
-            </div>
-            <div className="text-[13px] text-muted">{spotsLabel(left)}</div>
-          </div>
-          <ProgressBar filled={filled} total={role.spots} />
-          <RegisterActions role={role} org={org} application={application} left={left} />
-        </div>
-      )}
 
       <section className="flex flex-col gap-2.5">
         <h2 className="text-[13px] font-semibold uppercase tracking-[0.4px] text-muted">
@@ -226,7 +214,54 @@ function RoleView({
           </div>
         ))}
       </div>
-    </main>
+    </>
+  );
+
+  const shareButton = (
+    <button
+      type="button"
+      aria-label="Share this role"
+      onClick={() => toast("Sharing is coming soon")}
+      className="-mr-2.5 flex size-11 items-center justify-center text-ink"
+    >
+      <ExportIcon size={22} />
+    </button>
+  );
+
+  return (
+    <>
+      <VolunteerTopNav />
+      <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-5 px-6 pb-8 pt-3 lg:min-h-0 lg:max-w-260 lg:px-0 lg:pb-14 lg:pt-4">
+        <div className="lg:hidden">
+          <PageHeader backHref="/discover" backLabel="Back to feed" trailing={shareButton} />
+        </div>
+        <div className="hidden lg:block">
+          <Link href="/discover" className="text-sm font-semibold no-underline">
+            ← All roles
+          </Link>
+        </div>
+
+        {/* mobile: single column */}
+        <div className="flex flex-col gap-5 lg:hidden">
+          {imageEl}
+          {orgTitle}
+          {registerCard}
+          {content}
+        </div>
+
+        {/* desktop: 440px sticky left (photo + request card), content right */}
+        <div className="hidden lg:grid lg:grid-cols-[440px_minmax(0,1fr)] lg:items-start lg:gap-12">
+          <div className="sticky top-6 flex flex-col gap-5">
+            {imageEl}
+            {registerCard}
+          </div>
+          <div className="flex flex-col gap-6">
+            {orgTitle}
+            {content}
+          </div>
+        </div>
+      </main>
+    </>
   );
 }
 
@@ -356,21 +391,25 @@ function GoingView({
   };
 
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-[22px] px-6 pb-7 pt-3">
-      <PageHeader
-        backHref="/discover"
-        backLabel="Back to feed"
-        trailing={
-          <button
-            type="button"
-            aria-label="Share this role"
-            onClick={() => toast("Sharing is coming soon")}
-            className="-mr-2.5 flex size-11 items-center justify-center text-ink"
-          >
-            <ExportIcon size={22} />
-          </button>
-        }
-      />
+    <>
+      <VolunteerTopNav />
+      <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-[22px] px-6 pb-7 pt-3 lg:min-h-0 lg:max-w-170 lg:pt-6">
+      <div className="lg:hidden">
+        <PageHeader
+          backHref="/discover"
+          backLabel="Back to feed"
+          trailing={
+            <button
+              type="button"
+              aria-label="Share this role"
+              onClick={() => toast("Sharing is coming soon")}
+              className="-mr-2.5 flex size-11 items-center justify-center text-ink"
+            >
+              <ExportIcon size={22} />
+            </button>
+          }
+        />
+      </div>
 
       <div className="flex flex-col gap-3 pt-2">
         <div className="flex size-13 items-center justify-center rounded-full bg-accent text-white shadow-[0_10px_24px_rgba(217,88,59,0.28)]">
@@ -473,6 +512,7 @@ function GoingView({
           Log your shift
         </Link>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

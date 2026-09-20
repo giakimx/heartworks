@@ -27,7 +27,7 @@ export default function OnboardingPage() {
   };
 
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-[22px] px-6 pb-7 pt-4">
+    <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-[22px] px-6 pb-7 pt-4 lg:min-h-0 lg:max-w-170 lg:pb-14 lg:pt-10">
       <div className="flex h-11 items-center gap-4">
         <Link
           href="/"

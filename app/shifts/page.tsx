@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import TabBar from "@/components/chrome/TabBar";
+import { VolunteerTopNav } from "@/components/chrome/TopNav";
 import Wordmark from "@/components/chrome/Wordmark";
 import RoleRow from "@/components/roles/RoleRow";
 import { myShifts, orgById } from "@/lib/selectors";
@@ -21,12 +22,14 @@ export default function ShiftsPage() {
   const shifts = myShifts(state, volunteerId);
 
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-5 px-6 pb-32 pt-3">
-      <div className="flex h-12 items-center justify-between">
+    <>
+    <VolunteerTopNav />
+    <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-5 px-6 pb-32 pt-3 lg:min-h-0 lg:max-w-170 lg:pb-14 lg:pt-6">
+      <div className="flex h-12 items-center justify-between lg:hidden">
         <Wordmark size={20} />
       </div>
 
-      <h1 className="font-display text-[30px] font-normal leading-[1.1] tracking-[-0.4px]">
+      <h1 className="font-display text-[30px] font-normal leading-[1.1] tracking-[-0.4px] lg:text-[44px]">
         My shifts
       </h1>
 
@@ -69,5 +72,6 @@ export default function ShiftsPage() {
 
       <TabBar />
     </main>
+    </>
   );
 }

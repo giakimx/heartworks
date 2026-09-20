@@ -16,13 +16,11 @@ export default function FeatureRoleCard({
   org,
   tags,
   applications,
-  horizontal = false,
 }: {
   role: Role;
   org?: Org;
   tags: Skill[];
   applications: Application[];
-  horizontal?: boolean;
 }) {
   const image = imageFor(role.image);
   const filled = filledCount(role, applications);
@@ -37,11 +35,9 @@ export default function FeatureRoleCard({
   return (
     <Link
       href={`/roles/${role.id}` as never}
-      className={`flex overflow-hidden rounded-feature border border-line bg-[rgba(255,255,255,0.8)] text-ink no-underline shadow-card ${
-        horizontal ? "flex-row" : "flex-col"
-      }`}
+      className="flex flex-col overflow-hidden rounded-feature border border-line bg-[rgba(255,255,255,0.8)] text-ink no-underline shadow-card lg:grid lg:grid-cols-[480px_minmax(0,1fr)] lg:rounded-hero"
     >
-      <div className={`relative ${horizontal ? "w-[480px] shrink-0" : "h-47"}`}>
+      <div className="relative h-47 lg:h-80">
         {image && (
           <Image
             src={image.src}
@@ -49,17 +45,17 @@ export default function FeatureRoleCard({
             width={image.width}
             height={image.height}
             priority
-            className={`block object-cover ${horizontal ? "h-full w-full" : "h-47 w-full"}`}
+            className="block h-47 w-full object-cover lg:h-80"
           />
         )}
-        <div className="absolute left-3 top-3 flex h-7.5 items-center gap-1.5 rounded-full bg-white/90 px-3 text-xs font-semibold text-ink backdrop-blur-[10px]">
+        <div className="absolute left-3 top-3 flex h-7.5 items-center gap-1.5 rounded-full bg-white/90 px-3 text-xs font-semibold text-ink backdrop-blur-[10px] lg:left-4 lg:top-4 lg:h-8 lg:px-3.5 lg:text-[13px]">
           <HeartFilledIcon size={14} className="text-accent" />
           Top match
         </div>
       </div>
-      <div className={`flex flex-col gap-2.5 p-4 ${horizontal ? "grow justify-center gap-3 p-8" : ""}`}>
-        <div className="text-[13px] font-medium text-muted">{meta}</div>
-        <div className={`font-display leading-[1.15] ${horizontal ? "text-[34px]" : "text-[22px]"}`}>
+      <div className="flex flex-col gap-2.5 p-4 lg:justify-center lg:gap-3.5 lg:px-10 lg:py-9">
+        <div className="text-[13px] font-medium text-muted lg:text-sm">{meta}</div>
+        <div className="font-display text-[22px] leading-[1.15] tracking-[-0.4px] lg:text-[34px] lg:leading-[1.1]">
           {role.title}
         </div>
         {org && (

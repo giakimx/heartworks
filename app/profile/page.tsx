@@ -2,6 +2,7 @@
 
 import PageHeader from "@/components/chrome/PageHeader";
 import TabBar from "@/components/chrome/TabBar";
+import { VolunteerTopNav } from "@/components/chrome/TopNav";
 import { ExportIcon } from "@/components/icons";
 import StampWall from "@/components/profile/StampWall";
 import { toast } from "@/components/ui/Toast";
@@ -30,7 +31,10 @@ export default function ProfilePage() {
   );
 
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-[22px] px-6 pb-32 pt-3">
+    <>
+    <VolunteerTopNav />
+    <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-[22px] px-6 pb-32 pt-3 lg:min-h-0 lg:max-w-260 lg:gap-8 lg:px-0 lg:pb-14 lg:pt-6">
+      <div className="lg:hidden">
       <PageHeader
         backHref="/discover"
         backLabel="Back to feed"
@@ -45,17 +49,41 @@ export default function ProfilePage() {
           </button>
         }
       />
+      </div>
 
-      <div className="flex flex-col gap-1.5">
-        <h1 className="font-display text-[34px] font-normal leading-[1.1] tracking-[-0.5px]">
-          {volunteer ? `${firstName(volunteer.name)}'s community` : "Your community"}
-        </h1>
-        <div className="text-[15px] text-muted">Every confirmed shift earns a stamp.</div>
+      <div className="flex flex-col gap-1.5 lg:flex-row lg:items-end lg:justify-between">
+        <div className="flex flex-col gap-1.5">
+          <h1 className="font-display text-[34px] font-normal leading-[1.1] tracking-[-0.5px] lg:text-[52px] lg:leading-[1.08] lg:tracking-[-0.8px]">
+            {volunteer ? `${firstName(volunteer.name)}'s community` : "Your community"}
+          </h1>
+          <div className="text-[15px] text-muted lg:text-base">
+            Every confirmed shift earns a stamp.
+          </div>
+        </div>
+        {hydrated && (
+          <div className="hidden gap-2 lg:flex">
+            {(
+              [
+                [stats.shifts, "shifts"],
+                [stats.hours, "hours"],
+                [stats.skills, "skills"],
+              ] as const
+            ).map(([value, label]) => (
+              <div
+                key={label}
+                className="flex items-baseline gap-2 rounded-2xl border border-line bg-card-soft px-5 py-3.5"
+              >
+                <div className="font-display text-[28px] leading-none">{value}</div>
+                <div className="text-sm text-muted">{label}</div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {hydrated && (
         <>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-3 gap-2 lg:hidden">
             {(
               [
                 [stats.shifts, "shifts"],
@@ -95,8 +123,10 @@ export default function ProfilePage() {
             orgNameFor={(orgId) => orgById(state, orgId)?.name ?? ""}
           />
 
-          <section className="flex flex-col gap-1">
-            <h2 className="pb-1.5 font-display text-xl font-normal">Verified skills</h2>
+          <section className="flex flex-col gap-1 lg:max-w-160">
+            <h2 className="pb-1.5 font-display text-xl font-normal lg:text-2xl">
+              Verified skills
+            </h2>
             {skills.map(({ skill, hours, confirmedBy }) => (
               <div
                 key={skill}
@@ -121,7 +151,7 @@ export default function ProfilePage() {
           <button
             type="button"
             onClick={() => toast("Export is coming soon")}
-            className="flex h-[54px] items-center justify-center gap-2 rounded-full border border-[rgba(31,26,23,0.12)] bg-card-soft text-[15px] font-semibold text-ink"
+            className="flex h-[54px] items-center justify-center gap-2 rounded-full border border-[rgba(31,26,23,0.12)] bg-card-soft text-[15px] font-semibold text-ink lg:max-w-100 lg:px-8"
           >
             Export as resume-ready experience
           </button>
@@ -130,5 +160,6 @@ export default function ProfilePage() {
 
       <TabBar />
     </main>
+    </>
   );
 }

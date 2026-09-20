@@ -30,25 +30,58 @@ export default function StampWall({
   const height =
     Math.max(...[...POSITIONS.slice(0, shown.length), slot].map((p) => p.top)) + 216;
 
+  // desktop wall: stamps + the find-next slot + faint empty slots up to 6
+  const desktopStamps = stamps.slice(0, 4);
+  const emptySlots = Math.max(0, 6 - desktopStamps.length - 1);
+  const EMPTY_ROTATIONS = [-4, 2, 5, -3];
+
   return (
-    <div className="relative" style={{ height }}>
-      {shown.map((stamp, i) => (
-        <div
-          key={stamp.id}
-          className="absolute"
-          style={{ left: POSITIONS[i].left, top: POSITIONS[i].top }}
+    <>
+      <div className="relative lg:hidden" style={{ height }}>
+        {shown.map((stamp, i) => (
+          <div
+            key={stamp.id}
+            className="absolute"
+            style={{ left: POSITIONS[i].left, top: POSITIONS[i].top }}
+          >
+            <Stamp stamp={stamp} orgName={orgNameFor(stamp.orgId)} rotation={POSITIONS[i].r} />
+          </div>
+        ))}
+        <Link
+          href="/discover"
+          className="absolute box-border flex h-[182px] w-35 flex-col items-center justify-center gap-2 rounded-md border-[1.5px] border-dashed border-[rgba(31,26,23,0.28)] p-3 text-center text-[13px] font-semibold text-muted no-underline"
+          style={{ left: slot.left + 6, top: slot.top + 16, transform: `rotate(${slot.r}deg)` }}
         >
-          <Stamp stamp={stamp} orgName={orgNameFor(stamp.orgId)} rotation={POSITIONS[i].r} />
-        </div>
-      ))}
-      <Link
-        href="/discover"
-        className="absolute box-border flex h-[182px] w-35 flex-col items-center justify-center gap-2 rounded-md border-[1.5px] border-dashed border-[rgba(31,26,23,0.28)] p-3 text-center text-[13px] font-semibold text-muted no-underline"
-        style={{ left: slot.left + 6, top: slot.top + 16, transform: `rotate(${slot.r}deg)` }}
-      >
-        <PlusIcon size={22} />
-        Find your next stamp
-      </Link>
-    </div>
+          <PlusIcon size={22} />
+          Find your next stamp
+        </Link>
+      </div>
+
+      <div className="hidden items-center justify-between rounded-hero border border-[rgba(31,26,23,0.06)] bg-white/50 px-8 py-9 lg:flex">
+        {desktopStamps.map((stamp, i) => (
+          <Stamp
+            key={stamp.id}
+            stamp={stamp}
+            orgName={orgNameFor(stamp.orgId)}
+            rotation={POSITIONS[i].r}
+          />
+        ))}
+        <Link
+          href="/discover"
+          className="box-border flex h-[182px] w-35 shrink-0 rotate-3 flex-col items-center justify-center gap-2 rounded-md border-[1.5px] border-dashed border-[rgba(31,26,23,0.28)] p-3 text-center text-[13px] font-semibold text-muted no-underline"
+        >
+          <PlusIcon size={22} />
+          Find your next stamp
+        </Link>
+        {Array.from({ length: emptySlots }).map((_, i) => (
+          <div
+            key={i}
+            aria-hidden="true"
+            className="box-border h-[182px] w-35 shrink-0 rounded-md border-[1.5px] border-dashed border-[rgba(31,26,23,0.16)]"
+            style={{ transform: `rotate(${EMPTY_ROTATIONS[i % EMPTY_ROTATIONS.length]}deg)` }}
+          />
+        ))}
+      </div>
+    </>
   );
 }

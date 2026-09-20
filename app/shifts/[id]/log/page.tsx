@@ -3,6 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import PageHeader from "@/components/chrome/PageHeader";
+import { VolunteerTopNav } from "@/components/chrome/TopNav";
 import { MinusIcon, PlusIcon } from "@/components/icons";
 import { Chip } from "@/components/ui/Chip";
 import { weekday } from "@/lib/format";
@@ -44,8 +45,12 @@ export default function LogShiftPage() {
   };
 
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-[22px] px-6 pb-7 pt-3">
-      <PageHeader backHref={`/roles/${role.id}`} backLabel="Back" trailing={<div />} />
+    <>
+    <VolunteerTopNav />
+    <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-[22px] px-6 pb-7 pt-3 lg:min-h-0 lg:max-w-170 lg:pt-6">
+      <div className="lg:hidden">
+        <PageHeader backHref={`/roles/${role.id}`} backLabel="Back" trailing={<div />} />
+      </div>
 
       <div className="flex flex-col gap-2">
         <h1 className="font-display text-[32px] font-normal leading-[1.1] tracking-[-0.5px]">
@@ -134,5 +139,6 @@ export default function LogShiftPage() {
         </button>
       </div>
     </main>
+    </>
   );
 }

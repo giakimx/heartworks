@@ -2,6 +2,7 @@
 
 import { useParams } from "next/navigation";
 import PageHeader from "@/components/chrome/PageHeader";
+import { OrgTopNav } from "@/components/chrome/TopNav";
 import { CheckIcon } from "@/components/icons";
 import { InitialsAvatar } from "@/components/ui/Avatar";
 import ProgressBar from "@/components/ui/ProgressBar";
@@ -27,14 +28,18 @@ export default function RequestsPage() {
   const full = open <= 0;
 
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-5 px-6 pb-8 pt-3">
-      <PageHeader backHref="/org" backLabel="Back to org home" trailing={<div />} />
+    <>
+    <OrgTopNav />
+    <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-5 px-6 pb-8 pt-3 lg:min-h-0 lg:max-w-260 lg:px-0 lg:pb-14 lg:pt-6">
+      <div className="lg:hidden">
+        <PageHeader backHref="/org" backLabel="Back to org home" trailing={<div />} />
+      </div>
 
       <div className="flex flex-col gap-1.5">
         <div className="text-sm font-medium text-muted">
           {role.title} · {metaDate(role.date)}
         </div>
-        <h1 className="font-display text-[30px] font-normal leading-[1.15] tracking-[-0.4px]">
+        <h1 className="font-display text-[30px] font-normal leading-[1.15] tracking-[-0.4px] lg:text-[44px] lg:leading-[1.08] lg:tracking-[-0.8px]">
           Who wants in
         </h1>
       </div>
@@ -53,6 +58,7 @@ export default function RequestsPage() {
             <ProgressBar filled={filled} total={role.spots} />
           </div>
 
+          <div className="contents lg:grid lg:grid-cols-3 lg:items-start lg:gap-5">
           {applicants.map(({ application, volunteer, history, wants, brings }) => (
             <div
               key={application.id}
@@ -131,6 +137,7 @@ export default function RequestsPage() {
               )}
             </div>
           ))}
+          </div>
         </>
       )}
 
@@ -139,5 +146,6 @@ export default function RequestsPage() {
         Sorted by match. Declines get a kind note and other roles, never a bare no.
       </div>
     </main>
+    </>
   );
 }

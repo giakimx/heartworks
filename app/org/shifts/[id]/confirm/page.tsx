@@ -3,6 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import PageHeader from "@/components/chrome/PageHeader";
+import { OrgTopNav } from "@/components/chrome/TopNav";
 import { CheckIcon } from "@/components/icons";
 import { InitialsAvatar } from "@/components/ui/Avatar";
 import { metaDate } from "@/lib/format";
@@ -45,8 +46,12 @@ export default function OrgConfirmPage() {
   };
 
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-5 px-6 pb-7 pt-3">
-      <PageHeader backHref="/org" backLabel="Back to org home" trailing={<div />} />
+    <>
+    <OrgTopNav />
+    <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-5 px-6 pb-7 pt-3 lg:min-h-0 lg:max-w-170 lg:pt-6">
+      <div className="lg:hidden">
+        <PageHeader backHref="/org" backLabel="Back to org home" trailing={<div />} />
+      </div>
 
       <div className="flex flex-col gap-1.5">
         <div className="text-sm font-medium text-muted">
@@ -118,5 +123,6 @@ export default function OrgConfirmPage() {
         </div>
       )}
     </main>
+    </>
   );
 }

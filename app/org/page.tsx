@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { OrgTopNav } from "@/components/chrome/TopNav";
 import Wordmark from "@/components/chrome/Wordmark";
 import { CheckIcon, ChevronRightIcon, PlusIcon } from "@/components/icons";
 import ProgressBar from "@/components/ui/ProgressBar";
@@ -35,8 +36,10 @@ export default function OrgHomePage() {
     state.applications.filter((a) => a.roleId === role.id && a.status === "logged").length;
 
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-5 px-6 pb-7 pt-3">
-      <div className="flex h-12 items-center justify-between">
+    <>
+    <OrgTopNav />
+    <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-5 px-6 pb-7 pt-3 lg:min-h-0 lg:max-w-260 lg:gap-8 lg:px-0 lg:pb-14 lg:pt-6">
+      <div className="flex h-12 items-center justify-between lg:hidden">
         <div className="flex items-center gap-2">
           <Wordmark size={20} />
           <div className="flex h-[22px] items-center rounded-full bg-ink/8 px-2 text-[11px] font-bold tracking-[0.4px] text-muted">
@@ -54,8 +57,8 @@ export default function OrgHomePage() {
         )}
       </div>
 
-      <div className="flex flex-col gap-1">
-        <h1 className="font-display text-[30px] font-normal leading-[1.1] tracking-[-0.4px]">
+      <div className="flex flex-col gap-1 lg:gap-1.5">
+        <h1 className="font-display text-[30px] font-normal leading-[1.1] tracking-[-0.4px] lg:text-[44px] lg:leading-[1.08] lg:tracking-[-0.8px]">
           {org?.name}
         </h1>
         {hydrated && (
@@ -68,6 +71,7 @@ export default function OrgHomePage() {
         )}
       </div>
 
+      <div className="contents lg:grid lg:grid-cols-2 lg:gap-5">
       {hydrated && requestedCount > 0 && requestsRole && (
         <Link
           href={`/org/roles/${requestsRole.id}/requests` as never}
@@ -109,9 +113,10 @@ export default function OrgHomePage() {
           <ChevronRightIcon size={20} strokeWidth={2.2} className="text-muted" />
         </Link>
       )}
+      </div>
 
       {hydrated && (
-        <section className="flex flex-col gap-1">
+        <section className="flex flex-col gap-1 lg:hidden">
           <h2 className="pb-1.5 font-display text-xl font-normal">Your roles</h2>
           {roles.map((role) => (
             <OrgRoleRow key={role.id} role={role} loggedCount={loggedCount(role)} />
@@ -119,16 +124,109 @@ export default function OrgHomePage() {
         </section>
       )}
 
-      <div className="grow" />
+      {/* desktop: roles table */}
+      {hydrated && (
+        <section className="hidden flex-col lg:flex">
+          <h2 className="pb-3 font-display text-2xl font-normal">Your roles</h2>
+          <div className="grid grid-cols-[minmax(0,2.4fr)_minmax(0,1.4fr)_minmax(0,1.6fr)_minmax(0,1fr)_120px] items-center gap-4 pb-2.5 text-xs font-semibold uppercase tracking-[0.4px] text-muted">
+            <div>Role</div>
+            <div>When</div>
+            <div>Filled</div>
+            <div>Requests</div>
+            <div>Status</div>
+          </div>
+          {roles.map((role) => (
+            <OrgRoleTableRow key={role.id} role={role} loggedCount={loggedCount(role)} />
+          ))}
+        </section>
+      )}
+
+      <div className="grow lg:hidden" />
 
       <Link
         href="/org/roles/new"
-        className="flex h-14 items-center justify-center gap-2 rounded-full bg-ink text-base font-semibold text-white no-underline"
+        className="flex h-14 items-center justify-center gap-2 rounded-full bg-ink text-base font-semibold text-white no-underline lg:hidden"
       >
         <PlusIcon size={18} strokeWidth={2.4} />
         Post a role
       </Link>
     </main>
+    </>
+  );
+}
+
+function OrgRoleTableRow({ role, loggedCount }: { role: Role; loggedCount: number }) {
+  const state = useDemoStore();
+  const image = imageFor(role.image);
+  const filled = filledCount(role, state.applications);
+  const requested = state.applications.filter(
+    (a) => a.roleId === role.id && a.status === "requested"
+  ).length;
+
+  const href =
+    role.status === "draft"
+      ? "/org/roles/new"
+      : role.status === "done" && loggedCount > 0
+        ? `/org/shifts/${role.id}/confirm`
+        : `/org/roles/${role.id}/requests`;
+
+  return (
+    <Link
+      href={href as never}
+      className="grid grid-cols-[minmax(0,2.4fr)_minmax(0,1.4fr)_minmax(0,1.6fr)_minmax(0,1fr)_120px] items-center gap-4 border-t border-line py-3.5 text-ink no-underline"
+    >
+      <div className="flex items-center gap-3.5">
+        {image ? (
+          <Image
+            src={image.src}
+            alt=""
+            width={96}
+            height={96}
+            className="size-12 shrink-0 rounded-tile object-cover"
+          />
+        ) : (
+          <div className="box-border size-12 shrink-0 rounded-tile border-[1.5px] border-dashed border-[rgba(31,26,23,0.24)]" />
+        )}
+        <div className="text-base font-semibold">{role.title}</div>
+      </div>
+      <div className="text-sm text-muted">
+        {role.status === "draft"
+          ? "Draft · no date yet"
+          : [metaDate(role.date), compactTimeRange(role.start, role.end)]
+              .filter(Boolean)
+              .join(" · ") || "—"}
+      </div>
+      <div className="flex items-center gap-2.5">
+        {role.status === "draft" ? (
+          <div className="text-sm text-muted">—</div>
+        ) : (
+          <>
+            <ProgressBar filled={filled} total={role.spots} className="w-21" />
+            <div className="text-sm text-muted">
+              {filled} of {role.spots}
+            </div>
+          </>
+        )}
+      </div>
+      <div className="text-sm font-semibold">
+        {loggedCount > 0
+          ? `${loggedCount} to confirm`
+          : requested > 0
+            ? `${requested} waiting`
+            : "—"}
+      </div>
+      <div
+        className={`text-[13px] font-semibold ${
+          role.status === "live"
+            ? "text-ok-ink"
+            : role.status === "draft"
+              ? "text-accent-ink"
+              : "text-muted"
+        }`}
+      >
+        {role.status === "live" ? "Live" : role.status === "draft" ? "Draft" : "Done"}
+      </div>
+    </Link>
   );
 }
 

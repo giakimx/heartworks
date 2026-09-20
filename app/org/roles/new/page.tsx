@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { OrgTopNav } from "@/components/chrome/TopNav";
 import { BackIcon, MinusIcon, PlusIcon } from "@/components/icons";
+import RolePreviewCard from "@/components/org/RolePreviewCard";
 import { Chip } from "@/components/ui/Chip";
 import Segmented from "@/components/ui/Segmented";
 import { toast } from "@/components/ui/Toast";
@@ -143,8 +145,10 @@ export default function PostRolePage() {
   }
 
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-[22px] px-6 pb-8 pt-3">
-      <div className="flex h-11 items-center justify-between">
+    <>
+    <OrgTopNav />
+    <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-[22px] px-6 pb-8 pt-3 lg:min-h-0 lg:max-w-240 lg:pb-14 lg:pt-6">
+      <div className="flex h-11 items-center justify-between lg:hidden">
         <Link
           href="/org"
           aria-label="Back to org home"
@@ -161,15 +165,26 @@ export default function PostRolePage() {
         </button>
       </div>
 
-      <div className="flex flex-col gap-2">
-        <h1 className="font-display text-[30px] font-normal leading-[1.15] tracking-[-0.4px]">
-          Post a role
-        </h1>
-        <p className="text-[15px] leading-normal text-muted">
-          Two minutes. Say what needs doing and what someone walks away knowing.
-        </p>
+      <div className="flex items-end justify-between">
+        <div className="flex flex-col gap-2">
+          <h1 className="font-display text-[30px] font-normal leading-[1.15] tracking-[-0.4px] lg:text-[44px] lg:leading-[1.08] lg:tracking-[-0.8px]">
+            Post a role
+          </h1>
+          <p className="text-[15px] leading-normal text-muted">
+            Two minutes. Say what needs doing and what someone walks away knowing.
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={onSaveDraft}
+          className="hidden py-3 text-sm font-semibold text-muted lg:block"
+        >
+          Save draft
+        </button>
       </div>
 
+      <div className="contents lg:grid lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start lg:gap-12">
+      <div className="contents lg:flex lg:flex-col lg:gap-[22px]">
       <div className="flex flex-col gap-2">
         <label
           htmlFor="title"
@@ -350,7 +365,7 @@ export default function PostRolePage() {
         </div>
       )}
 
-      <div className="grow" />
+      <div className="grow lg:hidden" />
 
       <button
         type="button"
@@ -359,6 +374,21 @@ export default function PostRolePage() {
       >
         Post role
       </button>
+      </div>
+
+      <div className="sticky top-6 hidden lg:block">
+        <RolePreviewCard
+          title={f.title}
+          orgName={org?.name}
+          orgColor={org?.color}
+          neighborhood={org?.neighborhood}
+          workType={f.mode}
+          taught={f.taught.filter((s) => s !== "Add your own")}
+          spots={f.spots}
+        />
+      </div>
+      </div>
     </main>
+    </>
   );
 }
