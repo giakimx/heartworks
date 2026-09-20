@@ -166,7 +166,11 @@
       ],
       "skillsNeeded": [],
       "impact": "A clean park brings families back outside. You'll help keep Little Village's green space safe and welcoming for everyone on the block.",
-      "goodForGroups": true
+      "goodForGroups": true,
+      "start": "10:00",
+      "end": "13:00",
+      "hours": 3,
+      "address": "5675 Larkins St, Detroit, MI 48210"
     },
     {
       "id": "r_cats",
@@ -186,7 +190,11 @@
       "skillsNeeded": [
         "Photography"
       ],
-      "impact": "Every adoption opens a spot for another street cat. You'll help Corktown's colony cats find homes and neighbors find company."
+      "impact": "Every adoption opens a spot for another street cat. You'll help Corktown's colony cats find homes and neighbors find company.",
+      "start": "11:00",
+      "end": "14:00",
+      "hours": 3,
+      "address": "1701 Trumbull Ave, Detroit, MI 48216"
     },
     {
       "id": "r_garden",
@@ -204,7 +212,11 @@
       ],
       "skillsNeeded": [],
       "impact": "Wildflowers bring pollinators and color back to the neighborhood. You'll help Kintsugi Village grow a corner of Corktown everyone can enjoy.",
-      "_note": "full on purpose: shows the waitlist label and the full-role penalty in scoring"
+      "_note": "full on purpose: shows the waitlist label and the full-role penalty in scoring",
+      "start": "09:00",
+      "end": "11:00",
+      "hours": 2,
+      "address": "1400 Porter St, Detroit, MI 48216"
     },
     {
       "id": "r_prep",
@@ -223,7 +235,10 @@
         "Carpentry"
       ],
       "skillsNeeded": [],
-      "_note": "baseFilled 1 + three logged sample volunteers = 4 of 4"
+      "_note": "baseFilled 1 + three logged sample volunteers = 4 of 4",
+      "start": "12:00",
+      "end": "15:00",
+      "address": "8635 Mack Ave, Detroit, MI 48214"
     },
     {
       "id": "r_greeters",

@@ -131,7 +131,7 @@ function RoleView({
           {org.name}
         </div>
       )}
-      <h1 className="font-display text-[32px] font-normal leading-[1.1] tracking-[-0.5px] lg:text-[40px]">
+      <h1 className="font-display text-[29px] font-normal leading-[1.1] tracking-[-0.5px] lg:text-[37px]">
         {role.title}
       </h1>
     </div>

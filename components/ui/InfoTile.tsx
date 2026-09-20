@@ -34,8 +34,8 @@ export default function InfoTile({
     <div className="flex items-center gap-3.5">
       {tile}
       <div className="flex flex-col gap-0.5">
-        <div className="text-base font-semibold">{title}</div>
-        {sub && <div className="text-sm text-muted">{sub}</div>}
+        <div className="text-[13px] font-semibold">{title}</div>
+        {sub && <div className="text-[11px] text-muted">{sub}</div>}
       </div>
     </div>
   );
