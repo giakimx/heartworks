@@ -202,7 +202,9 @@ function RoleView({
           <h2 className="text-[13px] font-semibold uppercase tracking-[0.4px] text-muted">
             About
           </h2>
-          <p className="text-base leading-normal">{role.description}</p>
+          <p className="whitespace-pre-line text-base leading-normal">
+            {role.description}
+          </p>
         </section>
       )}
 
