@@ -3,7 +3,7 @@
 // Desktop top nav (lg+), volunteer + org variants. 76px tall, 48px side padding.
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Wordmark from "@/components/chrome/Wordmark";
 import { PlusIcon } from "@/components/icons";
 import { OrgAvatar } from "@/components/ui/Avatar";
@@ -39,16 +39,9 @@ function NavPill({
 
 export function VolunteerTopNav() {
   const pathname = usePathname();
-  const router = useRouter();
   const state = useDemoStore();
-  const setViewer = useDemoStore((s) => s.setViewer);
   const volunteer =
     state.viewer.kind === "volunteer" ? volunteerById(state, state.viewer.id) : undefined;
-
-  const forOrgs = () => {
-    setViewer({ kind: "org", id: "o_dbg" });
-    router.push("/org");
-  };
 
   return (
     <nav
@@ -64,13 +57,6 @@ export function VolunteerTopNav() {
         <NavPill href="/profile" label="Community" current={pathname === "/profile"} />
       </div>
       <div className="flex items-center gap-3">
-        <button
-          type="button"
-          onClick={forOrgs}
-          className="px-2 py-3 text-sm font-semibold text-muted"
-        >
-          For organizations
-        </button>
         <Link
           href="/profile"
           aria-label="Your profile"
