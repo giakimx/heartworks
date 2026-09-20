@@ -168,7 +168,8 @@ function RoleView({
   );
 
   const content = (
-    <>
+    // 3px more breathing room between detail sections than the page default
+    <div className="flex flex-col gap-[23px] lg:gap-[27px]">
       <div className="flex flex-col gap-3.5">
         {role.date && (
           <InfoTile
@@ -200,7 +201,7 @@ function RoleView({
         <button
           type="button"
           onClick={() => setMoreOpen(true)}
-          className="self-start py-2 text-[11px] font-semibold text-muted"
+          className="self-start py-2 text-[11px] font-semibold tracking-[0.4px] text-muted opacity-80"
         >
           More...
         </button>
@@ -282,7 +283,7 @@ function RoleView({
           {org.blurb && <p className="text-sm leading-normal">{org.blurb}</p>}
         </Link>
       )}
-    </>
+    </div>
   );
 
   const shareButton = (
