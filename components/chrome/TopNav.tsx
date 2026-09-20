@@ -48,7 +48,7 @@ export function VolunteerTopNav() {
       aria-label="Main"
       className="hidden h-19 items-center justify-between px-12 lg:flex"
     >
-      <Link href="/discover" className="text-ink no-underline">
+      <Link href="/" className="text-ink no-underline">
         <Wordmark size={22} />
       </Link>
       <div className="flex items-center gap-1">
@@ -86,7 +86,7 @@ export function OrgTopNav() {
       className="hidden h-19 items-center justify-between px-12 lg:flex"
     >
       <div className="flex items-center gap-2.5">
-        <Link href="/org" className="text-ink no-underline">
+        <Link href="/" className="text-ink no-underline">
           <Wordmark size={22} />
         </Link>
         <div className="flex h-[22px] items-center rounded-full bg-ink/8 px-2 text-[11px] font-bold tracking-[0.4px] text-muted">
