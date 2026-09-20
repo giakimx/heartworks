@@ -38,11 +38,17 @@ body {
   font-family: var(--font-ui);
   background-color: var(--color-ground);
   background-repeat: no-repeat;
-  /* page glow: fixed to the top, does not scroll-repeat */
+  /* page glow at the top; below it the page settles into neutral #F8F8F8
+     (Luma-style), so long pages read calm past the header */
   background-image:
     radial-gradient(120% 420px at 0% 0%, #fbd9cb 0%, rgba(251, 217, 203, 0) 70%),
     radial-gradient(100% 380px at 100% 0%, #f7d4dd 0%, rgba(247, 212, 221, 0) 70%),
-    radial-gradient(90% 300px at 50% 0%, #fcebcb 0%, rgba(252, 235, 203, 0) 75%);
+    radial-gradient(90% 300px at 50% 0%, #fcebcb 0%, rgba(252, 235, 203, 0) 75%),
+    linear-gradient(
+      180deg,
+      rgba(248, 248, 248, 0) 240px,
+      #f8f8f8 640px
+    );
 }
 
 @media (min-width: 1024px) {
@@ -50,7 +56,12 @@ body {
     background-image:
       radial-gradient(60% 560px at 0% 0%, #fbd9cb 0%, rgba(251, 217, 203, 0) 70%),
       radial-gradient(55% 520px at 100% 0%, #f7d4dd 0%, rgba(247, 212, 221, 0) 70%),
-      radial-gradient(50% 400px at 50% 0%, #fcebcb 0%, rgba(252, 235, 203, 0) 75%);
+      radial-gradient(50% 400px at 50% 0%, #fcebcb 0%, rgba(252, 235, 203, 0) 75%),
+      linear-gradient(
+        180deg,
+        rgba(248, 248, 248, 0) 320px,
+        #f8f8f8 760px
+      );
   }
 }
 
