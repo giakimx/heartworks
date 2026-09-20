@@ -358,7 +358,7 @@ function RegisterActions({
       <button
         type="button"
         onClick={() => request(role.id)}
-        className="h-[54px] rounded-full bg-ink text-base font-semibold text-white"
+        className="h-[49px] rounded-full bg-ink text-base font-semibold text-white"
       >
         I&apos;m interested
       </button>
