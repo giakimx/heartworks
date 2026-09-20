@@ -19,6 +19,7 @@ export type Org = {
   color: string;
   neighborhood: string;
   blurb?: string;
+  website?: string;
 };
 
 export type RoleStatus = "draft" | "live" | "done";

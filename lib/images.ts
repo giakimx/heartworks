@@ -50,3 +50,31 @@ const ORG_ICONS: Record<string, string> = {
 export function orgIconFor(orgId: string | undefined): string | undefined {
   return orgId ? ORG_ICONS[orgId] : undefined;
 }
+
+// Photo carousels for org profile pages.
+const ORG_PHOTOS: Record<string, ImageEntry[]> = {
+  o_dbg: [
+    {
+      src: "/images/org-dbg-1.png",
+      width: 1302,
+      height: 1046,
+      alt: "Inside the Detroit Body Garage gym",
+    },
+    {
+      src: "/images/org-dbg-2.png",
+      width: 2468,
+      height: 1690,
+      alt: "Detroit Body Garage members training together",
+    },
+    {
+      src: "/images/org-dbg-3.png",
+      width: 1072,
+      height: 836,
+      alt: "The Detroit Body Garage community",
+    },
+  ],
+};
+
+export function orgPhotosFor(orgId: string | undefined): ImageEntry[] {
+  return (orgId && ORG_PHOTOS[orgId]) || [];
+}

@@ -6,7 +6,13 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 import PageHeader from "@/components/chrome/PageHeader";
 import { VolunteerTopNav } from "@/components/chrome/TopNav";
-import { CalendarIcon, CheckIcon, ExportIcon, PinIcon } from "@/components/icons";
+import {
+  CalendarIcon,
+  CheckIcon,
+  ChevronRightIcon,
+  ExportIcon,
+  PinIcon,
+} from "@/components/icons";
 import InfoTile, { DateTile, IconTile } from "@/components/ui/InfoTile";
 import ProgressBar from "@/components/ui/ProgressBar";
 import { AvatarStack, OrgAvatar } from "@/components/ui/Avatar";
@@ -145,10 +151,13 @@ function RoleView({
   const orgTitle = (
     <div className="flex flex-col gap-2.5">
       {org && (
-        <div className="flex items-center gap-2 text-sm font-semibold">
+        <Link
+          href={`/orgs/${org.id}` as never}
+          className="flex items-center gap-2 self-start text-sm font-semibold text-ink no-underline"
+        >
           <OrgAvatar org={org} size={22} />
           {org.name}
-        </div>
+        </Link>
       )}
       <h1 className="font-display text-[29px] font-normal leading-[1.1] tracking-[-0.5px] lg:text-[37px]">
         {role.title}
@@ -249,13 +258,19 @@ function RoleView({
       </div>
 
       {org && (
-        <section className="flex flex-col gap-2">
-          <h2 className="text-[11px] font-semibold uppercase tracking-[0.4px] text-muted opacity-80">
-            About {org.name}
-          </h2>
+        <Link
+          href={`/orgs/${org.id}` as never}
+          className="flex flex-col gap-2 text-ink no-underline"
+        >
+          <div className="flex items-center justify-between">
+            <h2 className="text-[11px] font-semibold uppercase tracking-[0.4px] text-muted opacity-80">
+              About {org.name}
+            </h2>
+            <ChevronRightIcon size={16} className="text-muted" />
+          </div>
           <div className="h-px w-full bg-line-strong opacity-50" aria-hidden="true" />
           {org.blurb && <p className="text-sm leading-normal">{org.blurb}</p>}
-        </section>
+        </Link>
       )}
     </>
   );
