@@ -13,7 +13,7 @@ import { FilterChip } from "@/components/ui/Chip";
 import { toast } from "@/components/ui/Toast";
 import { listPhrase, spotsLabel } from "@/lib/format";
 import { filledCount, matchedLearnTags } from "@/lib/scoring";
-import { discoverRoles, orgById, volunteerById } from "@/lib/selectors";
+import { discoverRoles, orgById, searchRoles, volunteerById } from "@/lib/selectors";
 import { useDemoStore, useHydrated } from "@/lib/store";
 
 const FILTERS = ["For you", "This week", "Near me", "Groups", "Remote"];
@@ -22,8 +22,13 @@ export default function DiscoverPage() {
   const hydrated = useHydrated();
   const state = useDemoStore();
   const [neighborhood, setNeighborhood] = useState<string | null>(null);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [query, setQuery] = useState("");
   const volunteerId = state.viewer.kind === "volunteer" ? state.viewer.id : "v_gia";
   const volunteer = volunteerById(state, volunteerId);
+
+  const searching = query.trim().length > 0;
+  const results = searchRoles(state, volunteerId, query);
 
   const roles = discoverRoles(state, volunteerId);
   const [topMatch, ...rest] = roles;
@@ -64,7 +69,11 @@ export default function DiscoverPage() {
             <button
               type="button"
               aria-label="Search roles"
-              onClick={() => toast("Search is coming soon")}
+              aria-expanded={searchOpen}
+              onClick={() => {
+                if (searchOpen) setQuery("");
+                setSearchOpen(!searchOpen);
+              }}
               className="flex size-11 items-center justify-center text-ink"
             >
               <SearchIcon size={22} />
@@ -88,10 +97,7 @@ export default function DiscoverPage() {
           </div>
           <form
             className="hidden h-12 w-75 items-center gap-2.5 rounded-full border border-line-strong bg-[rgba(255,255,255,0.8)] px-4 lg:flex"
-            onSubmit={(e) => {
-              e.preventDefault();
-              toast("Search is coming soon");
-            }}
+            onSubmit={(e) => e.preventDefault()}
           >
             <SearchIcon size={18} className="text-muted" />
             <label htmlFor="q" className="sr-only">
@@ -100,13 +106,62 @@ export default function DiscoverPage() {
             <input
               id="q"
               type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
               placeholder="Search roles, orgs, skills"
               className="min-w-0 grow bg-transparent text-[15px] text-ink outline-none placeholder:text-muted/70"
             />
           </form>
         </div>
 
-        <div className="-mr-6 flex gap-2 overflow-x-auto pr-6 [scrollbar-width:none] lg:mr-0 lg:flex-wrap lg:overflow-visible lg:pr-0">
+        {searchOpen && (
+          <div className="flex h-12 items-center gap-2.5 rounded-full border border-line-strong bg-[rgba(255,255,255,0.8)] px-4 lg:hidden">
+            <SearchIcon size={18} className="text-muted" />
+            <label htmlFor="q-mobile" className="sr-only">
+              Search roles
+            </label>
+            <input
+              id="q-mobile"
+              type="search"
+              autoFocus
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search roles, orgs, skills"
+              className="min-w-0 grow bg-transparent text-[15px] text-ink outline-none placeholder:text-muted/70"
+            />
+          </div>
+        )}
+
+        {hydrated && searching && (
+          <section className="flex flex-col gap-1">
+            <div className="flex items-baseline justify-between pb-1">
+              <h2 className="font-display text-xl font-normal lg:text-2xl">Results</h2>
+              <div className="text-[13px] text-muted">
+                {results.length} {results.length === 1 ? "role" : "roles"}
+              </div>
+            </div>
+            {results.map((role) => (
+              <RoleRow
+                key={role.id}
+                role={role}
+                org={orgById(state, role.orgId)}
+                learnTag={matchedLearnTags(role, volunteer, 1)[0]}
+                spotsText={spotsLabel(role.spots - filledCount(role, state.applications))}
+              />
+            ))}
+            {results.length === 0 && (
+              <div className="flex flex-col gap-1 border-t border-line py-4 text-[15px] text-muted">
+                <div>Nothing matches &ldquo;{query.trim()}&rdquo; yet.</div>
+                <div className="text-[13px]">
+                  Try a skill, an org or a neighborhood — like mural painting,
+                  gardening or Corktown.
+                </div>
+              </div>
+            )}
+          </section>
+        )}
+
+        <div className={`-mr-6 flex gap-2 overflow-x-auto pr-6 [scrollbar-width:none] lg:mr-0 lg:flex-wrap lg:overflow-visible lg:pr-0 ${searching ? "hidden" : ""}`}>
           {FILTERS.map((label, i) => (
             <FilterChip
               key={label}
@@ -131,7 +186,7 @@ export default function DiscoverPage() {
           </div>
         </div>
 
-        {hydrated && topMatch && (
+        {hydrated && !searching && topMatch && (
           <FeatureRoleCard
             role={topMatch}
             org={orgById(state, topMatch.orgId)}
@@ -142,6 +197,7 @@ export default function DiscoverPage() {
 
         {/* mobile: rows grouped by neighborhood */}
         {hydrated &&
+          !searching &&
           [...groups.entries()].map(([name, list]) => (
             <section key={name} className="flex flex-col gap-1 lg:hidden">
               <div className="flex items-baseline justify-between pb-1">
@@ -167,7 +223,7 @@ export default function DiscoverPage() {
           ))}
 
         {/* desktop: 3-up grid */}
-        {hydrated && gridRoles.length > 0 && (
+        {hydrated && !searching && gridRoles.length > 0 && (
           <section className="hidden flex-col gap-4 lg:flex">
             <h2 className="font-display text-2xl font-normal">
               {neighborhood ?? "More near you"}

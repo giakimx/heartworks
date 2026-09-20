@@ -44,6 +44,27 @@ export function discoverRoles(data: DemoData, volunteerId: string): Role[] {
   });
 }
 
+// Live roles matching a free-text query (title, org, neighborhood, skills),
+// in match-ranked order. Empty query -> no results (the feed shows instead).
+export function searchRoles(
+  data: DemoData,
+  volunteerId: string,
+  query: string
+): Role[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return [];
+  return discoverRoles(data, volunteerId).filter((role) => {
+    const org = orgById(data, role.orgId);
+    return [
+      role.title,
+      org?.name ?? "",
+      role.neighborhood,
+      ...role.skillsTaught,
+      ...role.skillsNeeded,
+    ].some((text) => text.toLowerCase().includes(q));
+  });
+}
+
 export function profileStats(data: DemoData, volunteerId: string) {
   const stamps = data.stamps.filter((s) => s.volunteerId === volunteerId);
   const skills = new Set(stamps.flatMap((s) => s.skills));

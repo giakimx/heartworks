@@ -9,6 +9,7 @@ import {
   orgRoleToConfirm,
   orgRoleWithMostRequests,
   profileStats,
+  searchRoles,
   verifiedSkills,
 } from "@/lib/selectors";
 import { spotsLabel } from "@/lib/format";
@@ -68,6 +69,26 @@ describe("derived values as the demo advances", () => {
     data = { ...data, ...logic.accept(data, giaApp.id)! };
     const paint = data.roles.find((r) => r.id === "r_paint")!;
     expect(filledCount(paint, data.applications)).toBe(5);
+  });
+});
+
+describe("search", () => {
+  it("matches titles, orgs, neighborhoods and skills, case-insensitively", () => {
+    const data = seedState();
+    expect(searchRoles(data, "v_gia", "paint").map((r) => r.id)).toEqual(["r_paint"]);
+    expect(searchRoles(data, "v_gia", "colony").map((r) => r.id)).toEqual(["r_cats"]);
+    expect(searchRoles(data, "v_gia", "GARDENING").map((r) => r.id)).toEqual([
+      "r_garden",
+    ]);
+    expect(searchRoles(data, "v_gia", "corktown")).toHaveLength(2);
+  });
+
+  it("returns nothing for an empty or unmatched query, and never draft/done roles", () => {
+    const data = seedState();
+    expect(searchRoles(data, "v_gia", "  ")).toEqual([]);
+    expect(searchRoles(data, "v_gia", "zamboni")).toEqual([]);
+    // "prep" hits Wall prep day's title, but it's done — not searchable
+    expect(searchRoles(data, "v_gia", "wall prep")).toEqual([]);
   });
 });
 
