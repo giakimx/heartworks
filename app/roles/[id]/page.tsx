@@ -160,9 +160,10 @@ function RoleView({
       </div>
 
       <section className="flex flex-col gap-2.5">
-        <h2 className="text-[13px] font-semibold uppercase tracking-[0.4px] text-muted">
+        <h2 className="text-[11px] font-semibold uppercase tracking-[0.4px] text-muted opacity-80">
           You&apos;ll build
         </h2>
+        <div className="h-px w-full bg-line-strong opacity-50" aria-hidden="true" />
         <div className="flex flex-wrap gap-1.5">
           {role.skillsTaught.map((skill) => (
             <div
@@ -190,19 +191,21 @@ function RoleView({
 
       {role.impact && (
         <section className="flex flex-col gap-2">
-          <h2 className="text-[13px] font-semibold uppercase tracking-[0.4px] text-muted">
+          <h2 className="text-[11px] font-semibold uppercase tracking-[0.4px] text-muted opacity-80">
             Community impact
           </h2>
-          <p className="text-base leading-normal">{role.impact}</p>
+          <div className="h-px w-full bg-line-strong opacity-50" aria-hidden="true" />
+          <p className="text-sm leading-normal">{role.impact}</p>
         </section>
       )}
 
       {role.description && (
         <section className="flex flex-col gap-2">
-          <h2 className="text-[13px] font-semibold uppercase tracking-[0.4px] text-muted">
+          <h2 className="text-[11px] font-semibold uppercase tracking-[0.4px] text-muted opacity-80">
             About
           </h2>
-          <p className="whitespace-pre-line text-base leading-normal">
+          <div className="h-px w-full bg-line-strong opacity-50" aria-hidden="true" />
+          <p className="whitespace-pre-line text-sm leading-normal">
             {role.description}
           </p>
         </section>
