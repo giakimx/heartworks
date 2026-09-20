@@ -1,0 +1,195 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import Wordmark from "@/components/chrome/Wordmark";
+import { CheckIcon, ChevronRightIcon, PlusIcon } from "@/components/icons";
+import ProgressBar from "@/components/ui/ProgressBar";
+import { compactTimeRange, metaDate } from "@/lib/format";
+import { imageFor } from "@/lib/images";
+import { filledCount } from "@/lib/scoring";
+import {
+  orgById,
+  orgRequestedCount,
+  orgRoleToConfirm,
+  orgRoleWithMostRequests,
+  orgRoles,
+  spotsLeft,
+} from "@/lib/selectors";
+import { useDemoStore, useHydrated } from "@/lib/store";
+import type { Role } from "@/lib/types";
+
+export default function OrgHomePage() {
+  const hydrated = useHydrated();
+  const state = useDemoStore();
+  const orgId = state.viewer.kind === "org" ? state.viewer.id : "o_dbg";
+  const org = orgById(state, orgId);
+
+  const requestedCount = orgRequestedCount(state, orgId);
+  const requestsRole = orgRoleWithMostRequests(state, orgId);
+  const confirmRole = orgRoleToConfirm(state, orgId);
+  const roles = orgRoles(state, orgId);
+  const attention = (requestedCount > 0 && requestsRole ? 1 : 0) + (confirmRole ? 1 : 0);
+
+  const loggedCount = (role: Role) =>
+    state.applications.filter((a) => a.roleId === role.id && a.status === "logged").length;
+
+  return (
+    <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-5 px-6 pb-7 pt-3">
+      <div className="flex h-12 items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Wordmark size={20} />
+          <div className="flex h-[22px] items-center rounded-full bg-ink/8 px-2 text-[11px] font-bold tracking-[0.4px] text-muted">
+            ORGS
+          </div>
+        </div>
+        {org && (
+          <div
+            aria-label="Org account"
+            className="flex size-9 items-center justify-center rounded-full text-[13px] font-bold text-ink"
+            style={{ background: org.color }}
+          >
+            {org.initials}
+          </div>
+        )}
+      </div>
+
+      <div className="flex flex-col gap-1">
+        <h1 className="font-display text-[30px] font-normal leading-[1.1] tracking-[-0.4px]">
+          {org?.name}
+        </h1>
+        {hydrated && (
+          <div className="text-[15px] text-muted">
+            {org?.neighborhood}
+            {attention > 0 && (
+              <> · {attention} {attention === 1 ? "thing needs" : "things need"} you</>
+            )}
+          </div>
+        )}
+      </div>
+
+      {hydrated && requestedCount > 0 && requestsRole && (
+        <Link
+          href={`/org/roles/${requestsRole.id}/requests` as never}
+          className="flex items-center gap-3.5 rounded-card border border-line bg-card p-4 text-ink no-underline shadow-card"
+        >
+          <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-accent-tint font-display text-[22px] text-accent-ink">
+            {requestedCount}
+          </div>
+          <div className="flex grow flex-col gap-[3px]">
+            <div className="text-base font-semibold">People want in</div>
+            <div className="text-sm text-muted">
+              {requestsRole.title} ·{" "}
+              {spotsLeft(requestsRole, state.applications) === 0
+                ? "full"
+                : `${spotsLeft(requestsRole, state.applications)} ${
+                    spotsLeft(requestsRole, state.applications) === 1 ? "spot" : "spots"
+                  } open`}
+            </div>
+          </div>
+          <ChevronRightIcon size={20} strokeWidth={2.2} className="text-muted" />
+        </Link>
+      )}
+
+      {hydrated && confirmRole && (
+        <Link
+          href={`/org/shifts/${confirmRole.id}/confirm` as never}
+          className="flex items-center gap-3.5 rounded-card border border-line bg-card p-4 text-ink no-underline shadow-card"
+        >
+          <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-ok-tint text-ok-ink">
+            <CheckIcon size={24} strokeWidth={2.4} />
+          </div>
+          <div className="flex grow flex-col gap-[3px]">
+            <div className="text-base font-semibold">Confirm a finished shift</div>
+            <div className="text-sm text-muted">
+              {confirmRole.title} · {loggedCount(confirmRole)}{" "}
+              {loggedCount(confirmRole) === 1 ? "volunteer" : "volunteers"} logged hours
+            </div>
+          </div>
+          <ChevronRightIcon size={20} strokeWidth={2.2} className="text-muted" />
+        </Link>
+      )}
+
+      {hydrated && (
+        <section className="flex flex-col gap-1">
+          <h2 className="pb-1.5 font-display text-xl font-normal">Your roles</h2>
+          {roles.map((role) => (
+            <OrgRoleRow key={role.id} role={role} loggedCount={loggedCount(role)} />
+          ))}
+        </section>
+      )}
+
+      <div className="grow" />
+
+      <Link
+        href="/org/roles/new"
+        className="flex h-14 items-center justify-center gap-2 rounded-full bg-ink text-base font-semibold text-white no-underline"
+      >
+        <PlusIcon size={18} strokeWidth={2.4} />
+        Post a role
+      </Link>
+    </main>
+  );
+}
+
+function OrgRoleRow({ role, loggedCount }: { role: Role; loggedCount: number }) {
+  const state = useDemoStore();
+  const image = imageFor(role.image);
+  const filled = filledCount(role, state.applications);
+
+  const href =
+    role.status === "draft"
+      ? "/org/roles/new"
+      : role.status === "done" && loggedCount > 0
+        ? `/org/shifts/${role.id}/confirm`
+        : `/org/roles/${role.id}/requests`;
+
+  const meta =
+    role.status === "draft"
+      ? "Draft · no date yet"
+      : [metaDate(role.date), compactTimeRange(role.start, role.end)]
+          .filter(Boolean)
+          .join(" · ");
+
+  return (
+    <Link
+      href={href as never}
+      className="flex items-center gap-3.5 border-t border-line py-3.5 text-ink no-underline"
+    >
+      <div className="flex min-w-0 grow flex-col gap-1.5">
+        <div className="text-[13px] font-medium text-muted">{meta}</div>
+        <div className="text-[17px] font-semibold">{role.title}</div>
+        {role.status === "draft" ? (
+          <div className="text-[13px] font-semibold text-accent-ink">Finish posting</div>
+        ) : loggedCount > 0 ? (
+          <div className="text-[13px] font-semibold text-accent-ink">
+            {loggedCount} logged {loggedCount === 1 ? "shift" : "shifts"} to confirm
+          </div>
+        ) : role.status === "done" ? (
+          <div className="text-[13px] font-medium text-muted">Done</div>
+        ) : (
+          <div className="flex items-center gap-2.5">
+            <ProgressBar filled={filled} total={role.spots} className="w-21" />
+            <div className="text-[13px] text-muted">
+              {filled} of {role.spots} filled
+            </div>
+          </div>
+        )}
+      </div>
+      {image ? (
+        <Image
+          src={image.src}
+          alt={image.alt}
+          width={128}
+          height={128}
+          className="size-16 shrink-0 rounded-input object-cover"
+        />
+      ) : (
+        <div
+          aria-hidden="true"
+          className="box-border size-16 shrink-0 rounded-input border-[1.5px] border-dashed border-[rgba(31,26,23,0.24)]"
+        />
+      )}
+    </Link>
+  );
+}
