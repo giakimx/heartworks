@@ -176,7 +176,8 @@
       "start": "10:00",
       "end": "13:00",
       "hours": 3,
-      "address": "5675 Larkins St, Detroit, MI 48210"
+      "address": "5675 Larkins St, Detroit, MI 48210",
+      "description": "Neighbors, it's cleanup day at the park!\nWe'll split into crews for litter pickup, weeding and prepping the playground for fall.\n\nGloves, bags and grabbers provided - just bring water and comfortable shoes. Kids are welcome with an adult, and there's coffee and donuts for early birds at 9:45.\n\nEvery bag we fill keeps the park a place families want to be. See you out there!"
     },
     {
       "id": "r_cats",
@@ -200,7 +201,8 @@
       "start": "11:00",
       "end": "14:00",
       "hours": 3,
-      "address": "1701 Trumbull Ave, Detroit, MI 48216"
+      "address": "1701 Trumbull Ave, Detroit, MI 48216",
+      "description": "Meow Market is back!\nOur adoption awareness pop-up returns to Corktown, and the colony cats need friendly faces at the table.\n\nYou'll greet visitors, share adoption info, and help our photographers get the cats their best glamour shots. First time? We'll pair you with an experienced volunteer.\n\nEvery conversation helps a street cat find a warm home before winter."
     },
     {
       "id": "r_garden",
@@ -222,7 +224,8 @@
       "start": "09:00",
       "end": "11:00",
       "hours": 2,
-      "address": "1400 Porter St, Detroit, MI 48216"
+      "address": "1400 Porter St, Detroit, MI 48216",
+      "description": "Wildflower planting day at the village garden!\nWe're seeding the new pollinator beds along the fence and mulching the paths before the fall rain.\n\nNo green thumb needed - we'll show you everything. Tools, gloves and seeds are ready; wear clothes that can get dirty.\n\nStay after for lemonade and a walk through what last spring's volunteers planted."
     },
     {
       "id": "r_prep",
@@ -244,7 +247,8 @@
       "_note": "baseFilled 1 + three logged sample volunteers = 4 of 4",
       "start": "12:00",
       "end": "15:00",
-      "address": "8635 Mack Ave, Detroit, MI 48214"
+      "address": "8635 Mack Ave, Detroit, MI 48214",
+      "description": "Before the paint comes the prep.\nWe're washing walls, scraping loose patches and taping edges so Friday's painting party can fly.\n\nBring work gloves if you have them; everything else is on us. Pizza for the crew when we wrap."
     },
     {
       "id": "r_greeters",
@@ -262,7 +266,8 @@
       ],
       "skillsNeeded": [],
       "impact": "First impressions decide who comes back. You'll welcome neighbors into the new gym and help opening day feel like a block party.",
-      "trainingProvided": true
+      "trainingProvided": true,
+      "description": "Opening day is almost here and we want every neighbor to feel it the moment they walk in.\nGreeters welcome folks at the door, hand out schedules, and point people to the workout floor, the kids' corner and the snacks.\n\nShort training the week before - you'll be ready. Bring your best smile."
     }
   ],
   "applications": [
