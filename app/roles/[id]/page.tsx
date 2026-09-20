@@ -189,7 +189,7 @@ function RoleView({
         <button
           type="button"
           onClick={() => setMoreOpen(true)}
-          className="self-start py-1 text-[15px] font-semibold text-accent-ink"
+          className="self-start py-2 text-[11px] font-semibold text-muted"
         >
           More...
         </button>
