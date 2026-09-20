@@ -1,0 +1,74 @@
+- **Team name:** Team ZIA
+- **Product name:** Heartworks
+- **Type:** Two-sided marketplace (web)
+- **Form:** Web, mobile-responsive
+- **One-liner:** Heartworks matches Detroit volunteers with community organizations based on the skills each side wants to use, learn, or needs.
+- **Description:** Detroit organizations need help they can't hire for. Detroit adults and and youth want experience they can't get from a job listing. Heartworks connects them. Organizations post needs as scoped roles; volunteers post what they want to learn or contribute. We match on skills and goals, not just availability, so every volunteer shift builds something for both sides: capacity for the org, growth for the person.
+- **Slogans**
+	- Get involved in volunteer and social-impact opportunities in Detroit. Be part of the growing community.
+	- Heartworks connects people putting in heartworks to build stronger community.
+	- Work heart.
+	- Find where your heart is needed in Detroit.
+- **Problem statement:** Detroit's community organizations run on volunteers but recruit through word of mouth, facebook posts, and their websites. Those listings describe tasks, not growth, so people looking to build skills can't tell which roles will teach them anything, and small orgs don't have staff time to screen and follow up. Good matches happen simply by accident.
+- **Target users**
+	- **Organizations:** Detroit nonprofits, block clubs, community gardens, schools, mutual aid groups, and neighborhood associations with specific, scoped needs (event staffing, design, grant writing, tutoring, build days).
+	- **Volunteers:** Students building a resume, career-switchers testing a field, new Detroiters looking for community, and professionals offering pro bono skills.
+- **Differentiator:** Other volunteer boards match on time and location. Heartworks matches on goals and impact to the community: what the org needs done and what the volunteer wants to learn. Every role lists skills gained, and every completed shift adds verified experience to the volunteer's profile.
+- **Core features (Buildathon MVP):**
+	- Org profile + role posting (title, skills needed, skills taught, time commitment, neighborhood)
+	- Volunteer profile (skills, learning goals, availability, neighborhood)
+	- Ranked match feed + search with filters
+	- One-click "i'm interested" → org accepts/declines
+	- Post-shift confirmation that logs hours + skills to the volunteer's profile
+
+
+
+- **Business model**
+	- Free for volunteers, always
+	- Free core for orgs; paid tier for multi-role management, analytics, and volunteer CRM export
+	- Corporate volunteer programs: companies pay to place employee volunteer days with local orgs (this is the real revenue line)
+	- Early stage: foundation/civic grant funding (Detroit has an active philanthropy base)
+- **Success metrics**
+	- Matches made → shifts completed (conversion)
+	- 60-day repeat volunteer rate
+	- Skills logged per volunteer
+	- Orgs posting a second role
+- **Roadmap**
+	- Verified experience export (linkedin / resume-ready)
+	- Neighborhood impact map
+	- Team/group volunteering for friends, classes, companies
+	- Recurring roles + volunteer retention nudges
+	- Expand to other cities once Detroit density is proven
+
+- **Org candidates**
+	- [Lifebuilders Detroit](https://www.lifebuildersdetroit.com/?gad_source=1&gad_campaignid=21930484691&gbraid=0AAAAADrsvwuTCNGxsp5F43MZI8_RpvbeB&gclid=CjwKCAjwwrPVBhA1EiwAv_YO-SJGGrT1X5uRK7dy5o8MZ2qo870Z9cI3iyD5EpPKKnaVeB-QfNWzRBoCHa4QAvD_BwE) - Restoring a community that had suffered the devastating effects of disinvestment
+	- Detroit Body Garage - 
+	- [SisterFriends](http://sisterfriendsdetroit.com/) (CoD) - Volunteer effort to support healthier moms and babies
+	- Parks and Recreation (CoD) - Rarks and Recreation Department is responsible for 308 parks and 12 recreation facilities across every neighborhood in the city
+	- [Wayne State University](https://engineering.wayne.edu/academics/community/volunteer)
+	- [Detroit Riverfront Conservancy](https://www.detroitriverfront.org/support-us/volunteer)
+
+- **Benchmark**
+	- [Idealist](https://www.idealist.org/en/volunteer-in-detroit-mi)
+
+- **Volunteer application**
+	- First / (middle) / last name
+	- Address / City / State / Zip
+	- Phone / Email
+	- DoB
+	- Emergency contact
+	- Accommodations
+	- Languages
+	- Community involvement (list any community organizations to which you belong)
+	- Additional information (t-shirt size, etc.)
+	- Terms to agree (e.g., I understand that submission of this application does not guarantee acceptance. Prior to acceptance as a Detroit Riverfront Conservancy volunteer, I must attend a volunteer orientation, read and sign the Release and Waiver of Liability and Indemnity Agreement, and be subject to a background screening.)
+
+- **Org-side requirements**
+	- Org / team name
+	- Blurb
+	- Location
+	- Work type (on-site / hybrid / remote)
+	- Specifics (good for groups, training provided etc)
+	- Posted date
+	- Contact info
+	- Required age (min-max)

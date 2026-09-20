@@ -1,26 +1,118 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Design tokens — docs/DESIGN.md / design/tokens.css */
+@theme {
+  --color-ground: #fbf6f1;
+  --color-ink: #1f1a17;
+  --color-muted: #6b5f58;
+  --color-accent: #d9583b; /* never small text (3.6:1) */
+  --color-accent-ink: #8a2e1a;
+  --color-accent-tint: #fbe3d9;
+  --color-ok-ink: #1e6b40;
+  --color-ok-tint: #e3f1e7;
+  --color-line: rgba(31, 26, 23, 0.08);
+  --color-line-strong: rgba(31, 26, 23, 0.14);
+  --color-card: rgba(255, 255, 255, 0.85);
+  --color-card-soft: rgba(255, 255, 255, 0.75);
+  --color-stamp-paper: #fffdf9;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --font-display: var(--font-young-serif), Georgia, serif;
+  --font-ui: var(--font-instrument-sans), system-ui, sans-serif;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --radius-card: 20px;
+  --radius-feature: 24px;
+  --radius-hero: 28px;
+  --radius-input: 14px;
+  --radius-thumb: 16px;
+  --radius-tile: 12px;
+
+  --shadow-card: 0 1px 2px rgba(31, 26, 23, 0.04), 0 12px 32px rgba(31, 26, 23, 0.06);
+  --shadow-photo: 0 1px 2px rgba(31, 26, 23, 0.06), 0 18px 40px rgba(138, 46, 26, 0.14);
+  --shadow-pill: 0 8px 24px rgba(31, 26, 23, 0.1);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  color: var(--color-ink);
+  font-family: var(--font-ui);
+  background-color: var(--color-ground);
+  background-repeat: no-repeat;
+  /* page glow: fixed to the top, does not scroll-repeat */
+  background-image:
+    radial-gradient(120% 420px at 0% 0%, #fbd9cb 0%, rgba(251, 217, 203, 0) 70%),
+    radial-gradient(100% 380px at 100% 0%, #f7d4dd 0%, rgba(247, 212, 221, 0) 70%),
+    radial-gradient(90% 300px at 50% 0%, #fcebcb 0%, rgba(252, 235, 203, 0) 75%);
+}
+
+@media (min-width: 1024px) {
+  body {
+    background-image:
+      radial-gradient(60% 560px at 0% 0%, #fbd9cb 0%, rgba(251, 217, 203, 0) 70%),
+      radial-gradient(55% 520px at 100% 0%, #f7d4dd 0%, rgba(247, 212, 221, 0) 70%),
+      radial-gradient(50% 400px at 50% 0%, #fcebcb 0%, rgba(252, 235, 203, 0) 75%);
+  }
+}
+
+@layer base {
+  a {
+    color: var(--color-accent-ink);
+  }
+  a:hover {
+    color: #5e1e10;
+  }
+  button {
+    font-family: inherit;
+    cursor: pointer;
+  }
+  input,
+  textarea,
+  select {
+    font-family: inherit;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent-ink);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Stamp — the signature element. 154×196; both dimensions are multiples of
+   the 14px perforation pitch. Shadow must be drop-shadow (box-shadow would
+   fill the perforation holes with a solid rectangle). */
+.stamp {
+  width: 154px;
+  height: 196px;
+  position: relative;
+  background: radial-gradient(circle, transparent 4px, var(--color-stamp-paper) 4.5px)
+    -7px -7px / 14px 14px;
+  filter: drop-shadow(0 8px 14px rgba(31, 26, 23, 0.16));
+}
+.stamp-inner {
+  position: absolute;
+  inset: 7px;
+  padding: 7px;
+  background: var(--color-stamp-paper);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+@keyframes stamp-in {
+  from {
+    transform: scale(1.15) rotate(0deg);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) rotate(var(--stamp-rotation, 0deg));
+    opacity: 1;
+  }
+}
+.stamp-enter {
+  animation: stamp-in 400ms ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .stamp-enter {
+    animation: none;
+  }
 }

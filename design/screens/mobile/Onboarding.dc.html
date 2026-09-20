@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Pick your goals</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&amp;family=Instrument+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'Instrument Sans',system-ui,sans-serif;background:#FBF6F1}
+a{color:#8A2E1A}a:hover{color:#5E1E10}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; padding: 16px 24px 28px; display: flex; flex-direction: column; gap: 22px; color: #1F1A17; font-family: 'Instrument Sans', system-ui, sans-serif; background: radial-gradient(120% 420px at 0% 0%, #FBD9CB 0%, rgba(251,217,203,0) 70%), radial-gradient(100% 380px at 100% 0%, #F7D4DD 0%, rgba(247,212,221,0) 70%), radial-gradient(90% 300px at 50% 0%, #FCEBCB 0%, rgba(252,235,203,0) 75%), #FBF6F1;">
+<div style="display: flex; align-items: center; gap: 16px; height: 44px;">
+<a href="Main.dc.html" aria-label="Back" style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin-left: -10px; color: #1F1A17;">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg>
+</a>
+<div style="flex-grow: 1; display: flex; gap: 6px;">
+<div style="flex-grow: 1; height: 4px; border-radius: 4px; background: #1F1A17;"></div>
+<div style="flex-grow: 1; height: 4px; border-radius: 4px; background: #1F1A17;"></div>
+<div style="flex-grow: 1; height: 4px; border-radius: 4px; background: rgba(31,26,23,0.14);"></div>
+</div>
+<a href="Feed.dc.html" style="font-size: 14px; font-weight: 600; color: #6B5F58; text-decoration: none; padding: 12px 0;">Skip</a>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<h1 style="margin: 0; font-family: 'Young Serif', Georgia, serif; font-weight: 400; font-size: 30px; line-height: 1.15; letter-spacing: -0.4px;">What do you want out of volunteering?</h1>
+<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #6B5F58;">We match on this, not just your free Saturdays. Change it anytime.</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px;">
+<div style="font-size: 13px; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase; color: #6B5F58;">I want to learn</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px;">
+<sc-for list="{{ learn }}" as="chip" hint-placeholder-count="8">
+<sc-if value="{{ chip.on }}" hint-placeholder-val="{{ false }}">
+<button type="button" aria-pressed="true" onClick="{{ chip.toggle }}" style="height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid #1F1A17; background: #1F1A17; color: #FFFFFF; font-size: 15px; font-weight: 500;">{{ chip.label }}</button>
+</sc-if>
+<sc-if value="{{ chip.off }}" hint-placeholder-val="{{ true }}">
+<button type="button" aria-pressed="false" onClick="{{ chip.toggle }}" style="height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(31,26,23,0.12); background: rgba(255,255,255,0.75); color: #1F1A17; font-size: 15px; font-weight: 500;">{{ chip.label }}</button>
+</sc-if>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px;">
+<div style="font-size: 13px; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase; color: #6B5F58;">I can bring</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px;">
+<sc-for list="{{ bring }}" as="chip" hint-placeholder-count="6">
+<sc-if value="{{ chip.on }}" hint-placeholder-val="{{ false }}">
+<button type="button" aria-pressed="true" onClick="{{ chip.toggle }}" style="height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid #1F1A17; background: #1F1A17; color: #FFFFFF; font-size: 15px; font-weight: 500;">{{ chip.label }}</button>
+</sc-if>
+<sc-if value="{{ chip.off }}" hint-placeholder-val="{{ true }}">
+<button type="button" aria-pressed="false" onClick="{{ chip.toggle }}" style="height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(31,26,23,0.12); background: rgba(255,255,255,0.75); color: #1F1A17; font-size: 15px; font-weight: 500;">{{ chip.label }}</button>
+</sc-if>
+</sc-for>
+</div>
+</div>
+<div style="flex-grow: 1;"></div>
+<div style="display: flex; flex-direction: column; gap: 12px;">
+<div style="text-align: center; font-size: 14px; color: #6B5F58;">{{ summary }}</div>
+<a href="Feed.dc.html" style="display: flex; align-items: center; justify-content: center; gap: 8px; height: 56px; border-radius: 999px; background: #1F1A17; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none;">Show my matches</a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+state = { learn: ['Mural painting', 'Gardening'], bring: ['Design'] };
+renderVals() {
+const mk = (labels, key) => labels.map((label) => {
+const on = this.state[key].includes(label);
+return { label: label, on: on, off: !on, toggle: () => this.setState({ [key]: on ? this.state[key].filter((x) => x !== label) : this.state[key].concat([label]) }) };
+});
+const n = this.state.learn.length + this.state.bring.length;
+return {
+learn: mk(['Mural painting', 'Gardening', 'Grant writing', 'Event planning', 'Tutoring', 'Carpentry', 'Organizing', 'Animal care'], 'learn'),
+bring: mk(['Design', 'Writing', 'Spanish', 'Photography', 'Spreadsheets', 'A truck'], 'bring'),
+summary: n === 0 ? 'Pick at least one to tune your feed' : n + ' selected'
+};
+}
+}
+</script>
+</body>
+</html>

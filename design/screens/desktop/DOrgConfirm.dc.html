@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Confirm shift, desktop</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&amp;family=Instrument+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'Instrument Sans',system-ui,sans-serif;background:#FBF6F1}
+a{color:#8A2E1A}a:hover{color:#5E1E10}
+button{font-family:inherit;cursor:pointer}
+input,textarea{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 1280px; height: 800px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; color: #1F1A17; font-family: 'Instrument Sans', system-ui, sans-serif; background: radial-gradient(60% 560px at 0% 0%, #FBD9CB 0%, rgba(251,217,203,0) 70%), radial-gradient(55% 520px at 100% 0%, #F7D4DD 0%, rgba(247,212,221,0) 70%), radial-gradient(50% 400px at 50% 0%, #FCEBCB 0%, rgba(252,235,203,0) 75%), #FBF6F1;">
+<nav aria-label="Main" style="display: flex; align-items: center; justify-content: space-between; height: 76px; padding: 0 48px;"><div style="display: flex; align-items: center; gap: 10px;"><a href="DOrgHome.dc.html" style="display: flex; align-items: center; gap: 8px; color: #1F1A17; text-decoration: none;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0112 7.6a4.3 4.3 0 017.5 2.7c0 5.6-7.5 10.2-7.5 10.2z"></path></svg><div style="font-family: 'Young Serif', Georgia, serif; font-size: 22px;">heartworks</div></a><div style="height: 22px; padding: 0 8px; display: flex; align-items: center; border-radius: 999px; background: rgba(31,26,23,0.08); font-size: 11px; font-weight: 700; letter-spacing: 0.4px; color: #6B5F58;">ORGS</div></div><div style="display: flex; align-items: center; gap: 4px;"><a href="DOrgHome.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 14px; border-radius: 999px; font-size: 15px; font-weight: 600; text-decoration: none; color: #6B5F58; background: transparent;">Home</a><a href="DRequests.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 14px; border-radius: 999px; font-size: 15px; font-weight: 600; text-decoration: none; color: #6B5F58; background: transparent;">Requests</a><a href="DOrgConfirm.dc.html" style="display: flex; align-items: center; height: 44px; padding: 0 14px; border-radius: 999px; font-size: 15px; font-weight: 600; text-decoration: none; color: #1F1A17; background: rgba(31,26,23,0.07);">Confirm shifts</a></div><div style="display: flex; align-items: center; gap: 12px;"><a href="DPostRole.dc.html" style="display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 18px; border-radius: 999px; background: #1F1A17; color: #FFFFFF; font-size: 14px; font-weight: 600; text-decoration: none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Post a role</a><div style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #E9A23B; color: #1F1A17; font-size: 13px; font-weight: 700;">DB</div></div></nav><div style="width: 680px; margin: 0 auto; flex-grow: 1; box-sizing: border-box; padding: 24px 0 40px; display: flex; flex-direction: column; gap: 24px;"><div style="display: flex; flex-direction: column; gap: 6px;"><div style="font-size: 15px; font-weight: 500; color: #6B5F58;">Wall prep day · Sat, Sep 12</div><h1 style="margin: 0; font-family: 'Young Serif', Georgia, serif; font-weight: 400; font-size: 44px; line-height: 1.08; letter-spacing: -0.8px;">Who showed up?</h1><p style="margin: 0; font-size: 16px; line-height: 1.5; color: #6B5F58;">Untick anyone who didn't make it. Hours are what they reported.</p></div><div style="display: flex; flex-direction: column; border-radius: 20px; padding: 4px 20px; background: rgba(255,255,255,0.85); border: 1px solid rgba(31,26,23,0.08); box-shadow: 0 1px 2px rgba(31,26,23,0.04), 0 12px 32px rgba(31,26,23,0.06);"><sc-for list="{{ people }}" as="p" hint-placeholder-count="4"><button type="button" aria-pressed="{{ p.pressed }}" onClick="{{ p.toggle }}" style="display: flex; align-items: center; gap: 14px; min-height: 76px; padding: 0; border: 0; border-bottom: 1px solid rgba(31,26,23,0.07); background: transparent; text-align: left; color: #1F1A17;"><div style="flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; background: {{ p.color }}; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;">{{ p.initials }}</div><div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px;"><div style="font-size: 16px; font-weight: 600;">{{ p.name }}</div><div style="font-size: 14px; color: #6B5F58;">{{ p.detail }}</div></div><sc-if value="{{ p.on }}" hint-placeholder-val="{{ true }}"><div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: #1F1A17; color: #FFFFFF; display: flex; align-items: center; justify-content: center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></div></sc-if><sc-if value="{{ p.off }}" hint-placeholder-val="{{ false }}"><div style="flex-shrink: 0; width: 28px; height: 28px; box-sizing: border-box; border-radius: 50%; border: 1.5px solid rgba(31,26,23,0.28);"></div></sc-if></button></sc-for></div><div style="display: flex; align-items: center; justify-content: space-between; gap: 24px;"><div style="font-size: 14px; line-height: 1.5; color: #6B5F58;">{{ summary }}</div><a href="DOrgHome.dc.html" style="display: flex; align-items: center; justify-content: center; gap: 8px; height: 52px; padding: 0 28px; border-radius: 999px; background: #1F1A17; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none; border: 0; flex-shrink: 0;">{{ cta }}</a></div></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#D9583B","options":["#D9583B","#C2477A","#2E8B57","#3B6FD9"]},"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+state = { out: [] };
+renderVals() {
+const base = [
+{ id: 'a', initials: 'GK', name: 'Gia K.', color: '#F2B8A0', hours: 3, detail: '3 hrs · Surface prep, teamwork' },
+{ id: 'b', initials: 'ER', name: 'Elena R.', color: '#A9D4B8', hours: 3, detail: '3 hrs · Surface prep' },
+{ id: 'c', initials: 'MT', name: 'Marcus T.', color: '#C9B8E8', hours: 2, detail: '2 hrs · Teamwork' },
+{ id: 'd', initials: 'JW', name: 'Jordan W.', color: '#F3D48A', hours: 3, detail: '3 hrs · Surface prep, carpentry' }
+];
+const out = this.state.out;
+const kept = base.filter((p) => !out.includes(p.id));
+const hrs = kept.reduce((n, p) => n + p.hours, 0);
+return { accent: this.props.accent ?? '#D9583B', people: base.map((p) => { const on = !out.includes(p.id); return Object.assign({}, p, { on: on, off: !on, pressed: on ? 'true' : 'false', toggle: () => this.setState({ out: on ? out.concat([p.id]) : out.filter((x) => x !== p.id) }) }); }), summary: hrs + ' verified hours go on ' + kept.length + (kept.length === 1 ? ' profile' : ' profiles') + ' as stamps.', cta: 'Confirm ' + kept.length + (kept.length === 1 ? ' volunteer' : ' volunteers') };
+}
+}
+</script>
+</body>
+</html>

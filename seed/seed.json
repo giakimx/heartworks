@@ -1,0 +1,317 @@
+{
+  "viewer": {
+    "kind": "volunteer",
+    "id": "v_gia"
+  },
+  "skills": {
+    "learn": [
+      "Mural painting",
+      "Gardening",
+      "Grant writing",
+      "Event planning",
+      "Tutoring",
+      "Carpentry",
+      "Organizing",
+      "Animal care",
+      "Surface prep",
+      "Teamwork",
+      "Public speaking",
+      "Customer service"
+    ],
+    "bring": [
+      "Design",
+      "Writing",
+      "Spanish",
+      "Photography",
+      "Spreadsheets",
+      "A truck",
+      "Carpentry",
+      "First aid"
+    ]
+  },
+  "orgs": [
+    {
+      "id": "o_dbg",
+      "name": "Detroit Body Garage",
+      "initials": "DB",
+      "color": "#E9A23B",
+      "neighborhood": "Little Village"
+    },
+    {
+      "id": "o_bd",
+      "name": "Brilliant Detroit",
+      "initials": "BD",
+      "color": "#E9A23B",
+      "neighborhood": "Little Village"
+    },
+    {
+      "id": "o_ccc",
+      "name": "Colony Cat Club",
+      "initials": "CC",
+      "color": "#E9A23B",
+      "neighborhood": "Corktown"
+    },
+    {
+      "id": "o_kv",
+      "name": "Kintsugi Village",
+      "initials": "KV",
+      "color": "#E9A23B",
+      "neighborhood": "Corktown"
+    },
+    {
+      "id": "o_bic",
+      "name": "Belle Isle Conservancy",
+      "initials": "BI",
+      "color": "#E9A23B",
+      "neighborhood": "Belle Isle"
+    }
+  ],
+  "volunteers": [
+    {
+      "id": "v_gia",
+      "name": "Gia K.",
+      "initials": "GK",
+      "avatarColor": "#F2B8A0",
+      "neighborhood": "Little Village",
+      "learnGoals": [],
+      "brings": [],
+      "_note": "goals are empty on reset so onboarding sets them live; demo picks: learn Mural painting + Gardening, bring Design"
+    },
+    {
+      "id": "v_marcus",
+      "name": "Marcus T.",
+      "initials": "MT",
+      "avatarColor": "#C9B8E8",
+      "learnGoals": [
+        "Teamwork",
+        "Organizing"
+      ],
+      "brings": [
+        "A truck"
+      ],
+      "sample": true
+    },
+    {
+      "id": "v_elena",
+      "name": "Elena R.",
+      "initials": "ER",
+      "avatarColor": "#A9D4B8",
+      "learnGoals": [
+        "Mural painting"
+      ],
+      "brings": [
+        "Carpentry",
+        "Spanish"
+      ],
+      "sample": true
+    },
+    {
+      "id": "v_jordan",
+      "name": "Jordan W.",
+      "initials": "JW",
+      "avatarColor": "#F3D48A",
+      "learnGoals": [
+        "Surface prep",
+        "Carpentry"
+      ],
+      "brings": [
+        "Carpentry"
+      ],
+      "sample": true
+    }
+  ],
+  "roles": [
+    {
+      "id": "r_paint",
+      "orgId": "o_dbg",
+      "title": "Paint the building!",
+      "image": "mural.jpg",
+      "status": "live",
+      "date": "2026-09-18",
+      "start": "12:00",
+      "end": "15:00",
+      "hours": 3,
+      "neighborhood": "Little Village",
+      "address": "8635 Mack Ave, Detroit, MI 48214",
+      "verify": true,
+      "workType": "On-site",
+      "spots": 7,
+      "baseFilled": 4,
+      "skillsTaught": [
+        "Mural painting",
+        "Surface prep",
+        "Teamwork"
+      ],
+      "skillsNeeded": [
+        "Design"
+      ],
+      "impact": "You'll be part of the new gym opening in Little Village, supporting community health and wellbeing.",
+      "description": "Calling all volunteers. This Friday is our painting party: we're finishing the outside of the building before opening day. Paint, brushes and lunch are on us.",
+      "trainingProvided": true,
+      "goodForGroups": true
+    },
+    {
+      "id": "r_park",
+      "orgId": "o_bd",
+      "title": "Park cleaning group",
+      "image": "park.jpg",
+      "status": "live",
+      "date": "2026-09-30",
+      "neighborhood": "Little Village",
+      "workType": "On-site",
+      "spots": 20,
+      "baseFilled": 12,
+      "skillsTaught": [
+        "Organizing",
+        "Teamwork"
+      ],
+      "skillsNeeded": [],
+      "goodForGroups": true
+    },
+    {
+      "id": "r_cats",
+      "orgId": "o_ccc",
+      "title": "Adoption awareness event",
+      "image": "cat.jpg",
+      "status": "live",
+      "date": "2026-09-27",
+      "neighborhood": "Corktown",
+      "workType": "On-site",
+      "spots": 4,
+      "baseFilled": 3,
+      "skillsTaught": [
+        "Animal care",
+        "Customer service"
+      ],
+      "skillsNeeded": [
+        "Photography"
+      ]
+    },
+    {
+      "id": "r_garden",
+      "orgId": "o_kv",
+      "title": "Gardening with wildflowers",
+      "image": "garden.jpg",
+      "status": "live",
+      "date": "2026-09-29",
+      "neighborhood": "Corktown",
+      "workType": "On-site",
+      "spots": 10,
+      "baseFilled": 10,
+      "skillsTaught": [
+        "Gardening"
+      ],
+      "skillsNeeded": [],
+      "_note": "full on purpose: shows the waitlist label and the full-role penalty in scoring"
+    },
+    {
+      "id": "r_prep",
+      "orgId": "o_dbg",
+      "title": "Wall prep day",
+      "status": "done",
+      "date": "2026-09-12",
+      "hours": 3,
+      "neighborhood": "Little Village",
+      "workType": "On-site",
+      "spots": 4,
+      "baseFilled": 1,
+      "skillsTaught": [
+        "Surface prep",
+        "Teamwork",
+        "Carpentry"
+      ],
+      "skillsNeeded": [],
+      "_note": "baseFilled 1 + three logged sample volunteers = 4 of 4"
+    },
+    {
+      "id": "r_greeters",
+      "orgId": "o_dbg",
+      "title": "Opening day greeters",
+      "status": "draft",
+      "neighborhood": "Little Village",
+      "address": "8635 Mack Ave, Detroit, MI 48214",
+      "verify": true,
+      "workType": "On-site",
+      "spots": 6,
+      "baseFilled": 0,
+      "skillsTaught": [
+        "Event planning"
+      ],
+      "skillsNeeded": [],
+      "trainingProvided": true
+    }
+  ],
+  "applications": [
+    {
+      "id": "a1",
+      "roleId": "r_paint",
+      "volunteerId": "v_marcus",
+      "status": "requested"
+    },
+    {
+      "id": "a2",
+      "roleId": "r_paint",
+      "volunteerId": "v_elena",
+      "status": "requested"
+    },
+    {
+      "id": "a3",
+      "roleId": "r_prep",
+      "volunteerId": "v_elena",
+      "status": "logged",
+      "loggedHours": 3,
+      "loggedSkills": [
+        "Surface prep"
+      ]
+    },
+    {
+      "id": "a4",
+      "roleId": "r_prep",
+      "volunteerId": "v_marcus",
+      "status": "logged",
+      "loggedHours": 2,
+      "loggedSkills": [
+        "Teamwork"
+      ]
+    },
+    {
+      "id": "a5",
+      "roleId": "r_prep",
+      "volunteerId": "v_jordan",
+      "status": "logged",
+      "loggedHours": 3,
+      "loggedSkills": [
+        "Surface prep",
+        "Carpentry"
+      ]
+    }
+  ],
+  "stamps": [
+    {
+      "id": "s1",
+      "volunteerId": "v_gia",
+      "roleId": null,
+      "orgId": "o_bic",
+      "hours": 4,
+      "skills": [
+        "Event support"
+      ],
+      "date": "2026-08-12",
+      "image": "park.jpg",
+      "place": "Belle Isle"
+    },
+    {
+      "id": "s2",
+      "volunteerId": "v_gia",
+      "roleId": null,
+      "orgId": "o_kv",
+      "hours": 2,
+      "skills": [
+        "Gardening"
+      ],
+      "date": "2026-06-06",
+      "image": "garden.jpg",
+      "place": "Corktown"
+    }
+  ]
+}
