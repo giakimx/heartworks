@@ -362,7 +362,7 @@ function RegisterActions({
       >
         I&apos;m interested
       </button>
-      <div className="text-center text-[13px] text-muted">
+      <div className="text-center text-xs text-muted">
         The org confirms your spot. No commitment until they do.
       </div>
     </>
