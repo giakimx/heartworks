@@ -7,7 +7,7 @@ import Wordmark from "@/components/chrome/Wordmark";
 import { CheckIcon, ChevronRightIcon, PlusIcon } from "@/components/icons";
 import { OrgAvatar } from "@/components/ui/Avatar";
 import ProgressBar from "@/components/ui/ProgressBar";
-import { compactTimeRange, metaDate } from "@/lib/format";
+import { timeRange, metaDate } from "@/lib/format";
 import { imageFor } from "@/lib/images";
 import { filledCount } from "@/lib/scoring";
 import {
@@ -185,7 +185,7 @@ function OrgRoleTableRow({ role, loggedCount }: { role: Role; loggedCount: numbe
       <div className="text-sm text-muted">
         {role.status === "draft"
           ? "Draft · no date yet"
-          : [metaDate(role.date), compactTimeRange(role.start, role.end)]
+          : [metaDate(role.date), timeRange(role.start, role.end)]
               .filter(Boolean)
               .join(" · ") || "—"}
       </div>
@@ -238,7 +238,7 @@ function OrgRoleRow({ role, loggedCount }: { role: Role; loggedCount: number }) 
   const meta =
     role.status === "draft"
       ? "Draft · no date yet"
-      : [metaDate(role.date), compactTimeRange(role.start, role.end)]
+      : [metaDate(role.date), timeRange(role.start, role.end)]
           .filter(Boolean)
           .join(" · ");
 

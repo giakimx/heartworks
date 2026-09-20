@@ -6,7 +6,7 @@ import { HeartFilledIcon } from "@/components/icons";
 import { OrgAvatar } from "@/components/ui/Avatar";
 import ProgressBar from "@/components/ui/ProgressBar";
 import Tag from "@/components/ui/Tag";
-import { compactTimeRange, metaDate, spotsLabel } from "@/lib/format";
+import { timeRange, metaDate, spotsLabel } from "@/lib/format";
 import { imageFor } from "@/lib/images";
 import { filledCount } from "@/lib/scoring";
 import type { Application, Org, Role, Skill } from "@/lib/types";
@@ -27,7 +27,7 @@ export default function FeatureRoleCard({
   const filled = filledCount(role, applications);
   const meta = [
     metaDate(role.date),
-    compactTimeRange(role.start, role.end),
+    timeRange(role.start, role.end),
     role.neighborhood,
   ]
     .filter(Boolean)

@@ -14,10 +14,11 @@ import {
   dayOfMonth,
   firstName,
   formatDate,
-  fullTimeRange,
   metaDate,
   monthAbbrev,
   spotsLabel,
+  timeRange,
+  timeRangeWithHours,
 } from "@/lib/format";
 import { imageFor } from "@/lib/images";
 import { filledCount, intersect } from "@/lib/scoring";
@@ -143,19 +144,18 @@ function RoleView({
           <InfoTile
             tile={<DateTile month={monthAbbrev(role.date)} day={dayOfMonth(role.date)} />}
             title={formatDate(role.date)}
-            sub={[fullTimeRange(role.start, role.end), role.hours ? `${role.hours} hours` : ""]
-              .filter(Boolean)
-              .join(" · ")}
+            sub={timeRangeWithHours(role.start, role.end, role.hours)}
           />
         )}
+        {/* address = where the event happens; neighborhood = community context */}
         <InfoTile
           tile={
             <IconTile>
               <PinIcon size={22} />
             </IconTile>
           }
-          title={role.neighborhood}
-          sub={role.address}
+          title={role.address ?? role.neighborhood}
+          sub={role.address ? `${role.neighborhood} neighborhood` : undefined}
         />
       </div>
 
@@ -453,14 +453,18 @@ function GoingView({
               When
             </div>
             <div className="text-[15px] font-semibold">{metaDate(role.date)}</div>
-            <div className="text-sm text-muted">{fullTimeRange(role.start, role.end)}</div>
+            <div className="text-sm text-muted">{timeRange(role.start, role.end)}</div>
           </div>
           <div className="flex flex-col gap-[3px]">
             <div className="text-xs font-semibold uppercase tracking-[0.4px] text-muted">
               Where
             </div>
-            <div className="text-[15px] font-semibold">{role.neighborhood}</div>
-            <div className="text-sm text-muted">{role.address?.split(",")[0]}</div>
+            <div className="text-[15px] font-semibold">
+              {role.address?.split(",")[0] ?? role.neighborhood}
+            </div>
+            {role.address && (
+              <div className="text-sm text-muted">{role.neighborhood} neighborhood</div>
+            )}
           </div>
         </div>
         <div className="flex flex-wrap gap-1.5 px-4 pb-4">
