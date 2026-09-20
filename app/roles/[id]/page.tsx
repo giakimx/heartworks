@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useState } from "react";
 import PageHeader from "@/components/chrome/PageHeader";
 import { VolunteerTopNav } from "@/components/chrome/TopNav";
 import { CalendarIcon, CheckIcon, ExportIcon, PinIcon } from "@/components/icons";
@@ -81,12 +82,30 @@ function RoleView({
   hydrated: boolean;
 }) {
   const state = useDemoStore();
+  const withdraw = useDemoStore((s) => s.withdraw);
+  const undoRequest = useDemoStore((s) => s.undoRequest);
+  const [moreOpen, setMoreOpen] = useState(false);
   const image = imageFor(role.image);
   const filled = filledCount(role, state.applications);
   const left = role.spots - filled;
   const matchCount = volunteer
     ? intersect(role.skillsTaught, volunteer.learnGoals).length
     : 0;
+
+  const cancelRegistration = () => {
+    setMoreOpen(false);
+    if (application?.status === "accepted") {
+      if (window.confirm(`Give up your spot at ${role.title}?`)) {
+        withdraw(role.id);
+        toast("Your spot was given back");
+      }
+    } else if (application?.status === "requested") {
+      undoRequest(role.id);
+      toast("Request withdrawn");
+    } else {
+      toast("You're not registered for this role yet");
+    }
+  };
 
   const facts = [
     role.workType,
@@ -157,6 +176,13 @@ function RoleView({
           title={role.address ?? role.neighborhood}
           sub={role.address ? `${role.neighborhood} neighborhood` : undefined}
         />
+        <button
+          type="button"
+          onClick={() => setMoreOpen(true)}
+          className="self-start py-1 text-[15px] font-semibold text-accent-ink"
+        >
+          More...
+        </button>
       </div>
 
       <section className="flex flex-col gap-2.5">
@@ -229,23 +255,6 @@ function RoleView({
           </h2>
           <div className="h-px w-full bg-line-strong opacity-50" aria-hidden="true" />
           {org.blurb && <p className="text-sm leading-normal">{org.blurb}</p>}
-          <div className="grid grid-cols-2 gap-2.5 pt-1">
-            <button
-              type="button"
-              onClick={() => toast(`Messaging ${org.name} is coming soon`)}
-              className="h-[50px] rounded-full border border-[rgba(31,26,23,0.12)] bg-card-soft text-[15px] font-semibold text-ink"
-            >
-              Contact
-            </button>
-            <button
-              type="button"
-              onClick={() => toast("Calendar export is coming soon")}
-              className="flex h-[50px] items-center justify-center gap-2 rounded-full border border-[rgba(31,26,23,0.12)] bg-card-soft text-[15px] font-semibold text-ink"
-            >
-              <CalendarIcon size={18} />
-              Add to calendar
-            </button>
-          </div>
         </section>
       )}
     </>
@@ -294,6 +303,49 @@ function RoleView({
             {content}
           </div>
         </div>
+
+        {moreOpen && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center px-6"
+            role="dialog"
+            aria-modal="true"
+            aria-label="More options"
+          >
+            <button
+              type="button"
+              aria-label="Close"
+              onClick={() => setMoreOpen(false)}
+              className="absolute inset-0 bg-ink/30"
+            />
+            <div className="relative flex w-full max-w-90 flex-col overflow-hidden rounded-card border border-line bg-white shadow-card">
+              {(
+                [
+                  ["Add to Calendar", () => toast("Calendar export is coming soon")],
+                  [
+                    "Contact organizer",
+                    () => toast(`Messaging ${org?.name ?? "the org"} is coming soon`),
+                  ],
+                  ["Cancel registration", cancelRegistration],
+                  ["Share event poster", () => toast("Sharing is coming soon")],
+                ] as const
+              ).map(([label, action], i) => (
+                <button
+                  key={label}
+                  type="button"
+                  onClick={() => {
+                    if (label !== "Cancel registration") setMoreOpen(false);
+                    action();
+                  }}
+                  className={`h-14 px-5 text-left text-[15px] font-semibold text-ink hover:bg-ink/5 ${
+                    i > 0 ? "border-t border-line" : ""
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </main>
     </>
   );
