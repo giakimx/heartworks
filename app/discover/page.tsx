@@ -18,10 +18,29 @@ import { useDemoStore, useHydrated } from "@/lib/store";
 
 const FILTERS = ["For you", "This week", "Near me", "Groups", "Remote"];
 
+// Within the next 7 days of the viewer's "today" (parsed at local noon so
+// bare ISO dates don't shift a day).
+function isThisWeek(iso?: string): boolean {
+  if (!iso) return false;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const date = new Date(`${iso}T12:00:00`);
+  const days = (date.getTime() - today.getTime()) / 86_400_000;
+  return days >= 0 && days <= 7;
+}
+
+const EMPTY_HINTS: Record<string, string> = {
+  "This week": "Nothing scheduled in the next seven days.",
+  "Near me": "No roles in your neighborhood right now.",
+  Groups: "No group-friendly roles open right now.",
+  Remote: "Every open role is on-site right now.",
+};
+
 export default function DiscoverPage() {
   const hydrated = useHydrated();
   const state = useDemoStore();
-  const [neighborhood, setNeighborhood] = useState<string | null>(null);
+  // one active filter at a time; null = the default "For you" feed
+  const [filter, setFilter] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
   const volunteerId = state.viewer.kind === "volunteer" ? state.viewer.id : "v_gia";
@@ -44,9 +63,16 @@ export default function DiscoverPage() {
     groups.set(role.neighborhood, list);
   }
 
-  const gridRoles = neighborhood
-    ? rest.filter((r) => r.neighborhood === neighborhood)
-    : rest;
+  const filtered = !filter
+    ? []
+    : roles.filter((role) => {
+        if (filter === "This week") return isThisWeek(role.date);
+        if (filter === "Near me")
+          return !!volunteer?.neighborhood && role.neighborhood === volunteer.neighborhood;
+        if (filter === "Groups") return !!role.goodForGroups;
+        if (filter === "Remote") return role.workType === "Remote";
+        return role.neighborhood === filter; // desktop neighborhood chips
+      });
 
   const subtitle = hasGoals ? (
     <>Matched to {listPhrase(goals)}</>
@@ -162,16 +188,13 @@ export default function DiscoverPage() {
         )}
 
         <div className={`-mr-6 flex gap-2 overflow-x-auto pr-6 [scrollbar-width:none] lg:mr-0 lg:flex-wrap lg:overflow-visible lg:pr-0 ${searching ? "hidden" : ""}`}>
-          {FILTERS.map((label, i) => (
+          <FilterChip label="For you" on={!filter} onClick={() => setFilter(null)} />
+          {FILTERS.slice(1).map((label) => (
             <FilterChip
               key={label}
               label={label}
-              on={i === 0 && !neighborhood}
-              onClick={
-                i === 0
-                  ? () => setNeighborhood(null)
-                  : () => toast("Filters are coming soon")
-              }
+              on={filter === label}
+              onClick={() => setFilter(filter === label ? null : label)}
             />
           ))}
           <div className="hidden gap-2 lg:flex">
@@ -179,14 +202,62 @@ export default function DiscoverPage() {
               <FilterChip
                 key={n}
                 label={n}
-                on={neighborhood === n}
-                onClick={() => setNeighborhood(neighborhood === n ? null : n)}
+                on={filter === n}
+                onClick={() => setFilter(filter === n ? null : n)}
               />
             ))}
           </div>
         </div>
 
-        {hydrated && !searching && topMatch && (
+        {/* active filter: one flat list for both layouts */}
+        {hydrated && !searching && filter && (
+          <section className="flex flex-col gap-1">
+            <div className="flex items-baseline justify-between pb-1">
+              <h2 className="font-display text-xl font-normal lg:text-2xl">{filter}</h2>
+              <div className="text-[13px] text-muted">
+                {filtered.length} {filtered.length === 1 ? "role" : "roles"}
+              </div>
+            </div>
+            <div className="flex flex-col gap-1 lg:hidden">
+              {filtered.map((role) => (
+                <RoleRow
+                  key={role.id}
+                  role={role}
+                  org={orgById(state, role.orgId)}
+                  learnTag={matchedLearnTags(role, volunteer, 1)[0]}
+                  spotsText={spotsLabel(role.spots - filledCount(role, state.applications))}
+                />
+              ))}
+            </div>
+            {filtered.length > 0 && (
+              <div className="hidden grid-cols-3 gap-5 pt-2 lg:grid">
+                {filtered.map((role) => (
+                  <RoleCard
+                    key={role.id}
+                    role={role}
+                    org={orgById(state, role.orgId)}
+                    learnTag={matchedLearnTags(role, volunteer, 1)[0]}
+                    applications={state.applications}
+                  />
+                ))}
+              </div>
+            )}
+            {filtered.length === 0 && (
+              <div className="flex flex-col gap-1 border-t border-line py-4 text-[15px] text-muted">
+                <div>{EMPTY_HINTS[filter] ?? `No roles in ${filter} right now.`}</div>
+                <button
+                  type="button"
+                  onClick={() => setFilter(null)}
+                  className="self-start text-[13px] font-semibold text-accent-ink"
+                >
+                  See all roles
+                </button>
+              </div>
+            )}
+          </section>
+        )}
+
+        {hydrated && !searching && !filter && topMatch && (
           <FeatureRoleCard
             role={topMatch}
             org={orgById(state, topMatch.orgId)}
@@ -198,6 +269,7 @@ export default function DiscoverPage() {
         {/* mobile: rows grouped by neighborhood */}
         {hydrated &&
           !searching &&
+          !filter &&
           [...groups.entries()].map(([name, list]) => (
             <section key={name} className="flex flex-col gap-1 lg:hidden">
               <div className="flex items-baseline justify-between pb-1">
@@ -223,13 +295,11 @@ export default function DiscoverPage() {
           ))}
 
         {/* desktop: 3-up grid */}
-        {hydrated && !searching && gridRoles.length > 0 && (
+        {hydrated && !searching && !filter && rest.length > 0 && (
           <section className="hidden flex-col gap-4 lg:flex">
-            <h2 className="font-display text-2xl font-normal">
-              {neighborhood ?? "More near you"}
-            </h2>
+            <h2 className="font-display text-2xl font-normal">More near you</h2>
             <div className="grid grid-cols-3 gap-5">
-              {gridRoles.map((role) => (
+              {rest.map((role) => (
                 <RoleCard
                   key={role.id}
                   role={role}
