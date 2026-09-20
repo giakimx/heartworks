@@ -11,6 +11,7 @@ import {
   CheckIcon,
   ChevronRightIcon,
   ExportIcon,
+  HeartFilledIcon,
   PinIcon,
 } from "@/components/icons";
 import InfoTile, { DateTile, IconTile } from "@/components/ui/InfoTile";
@@ -225,12 +226,21 @@ function RoleView({
       </section>
 
       {role.impact && (
-        <section className="flex flex-col gap-2">
-          <h2 className="text-[11px] font-semibold uppercase tracking-[0.4px] text-muted opacity-80">
-            Community impact
-          </h2>
-          <div className="h-px w-full bg-line-strong opacity-50" aria-hidden="true" />
-          <p className="text-sm leading-normal">{role.impact}</p>
+        <section className="relative overflow-hidden rounded-card border border-accent/25 bg-gradient-to-br from-accent-tint via-[#FDEDE2] to-[#FCEBCB] p-4 shadow-[0_1px_2px_rgba(217,88,59,0.06),0_12px_32px_rgba(217,88,59,0.12)]">
+          {/* soft shine sweep across the card */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -inset-y-8 -left-1/4 w-1/3 rotate-12 bg-white/35 blur-xl"
+          />
+          <div className="relative flex flex-col gap-2">
+            <div className="flex items-center gap-1.5">
+              <HeartFilledIcon size={13} className="text-accent" />
+              <h2 className="text-[11px] font-semibold uppercase tracking-[0.4px] text-accent-ink">
+                Community impact
+              </h2>
+            </div>
+            <p className="text-sm leading-normal text-ink">{role.impact}</p>
+          </div>
         </section>
       )}
 
@@ -246,16 +256,9 @@ function RoleView({
         </section>
       )}
 
-      <div className="grid grid-cols-2 gap-2">
-        {facts.map((fact) => (
-          <div
-            key={fact}
-            className="rounded-input border border-line bg-white/70 px-3.5 py-3 text-sm font-medium"
-          >
-            {fact}
-          </div>
-        ))}
-      </div>
+      {facts.length > 0 && (
+        <div className="text-[13px] font-medium text-muted">{facts.join(" · ")}</div>
+      )}
 
       {org && (
         <Link
