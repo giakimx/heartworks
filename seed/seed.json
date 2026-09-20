@@ -35,35 +35,40 @@
       "name": "Detroit Body Garage",
       "initials": "DB",
       "color": "#E9A23B",
-      "neighborhood": "Little Village"
+      "neighborhood": "Little Village",
+      "blurb": "A community gym in Little Village building strength, health and neighborhood pride."
     },
     {
       "id": "o_bd",
       "name": "Brilliant Detroit",
       "initials": "BD",
       "color": "#E9A23B",
-      "neighborhood": "Little Village"
+      "neighborhood": "Little Village",
+      "blurb": "Neighborhood hubs helping Detroit kids and families grow up healthy, stable and smart."
     },
     {
       "id": "o_ccc",
       "name": "Colony Cat Club",
       "initials": "CC",
       "color": "#E9A23B",
-      "neighborhood": "Corktown"
+      "neighborhood": "Corktown",
+      "blurb": "Corktown neighbors caring for street cats and finding them loving homes."
     },
     {
       "id": "o_kv",
       "name": "Kintsugi Village",
       "initials": "KV",
       "color": "#E9A23B",
-      "neighborhood": "Corktown"
+      "neighborhood": "Corktown",
+      "blurb": "A Corktown community space growing gardens, art and everyday connection."
     },
     {
       "id": "o_bic",
       "name": "Belle Isle Conservancy",
       "initials": "BI",
       "color": "#E9A23B",
-      "neighborhood": "Belle Isle"
+      "neighborhood": "Belle Isle",
+      "blurb": "Protecting and restoring Belle Isle so the park thrives for every Detroiter."
     }
   ],
   "volunteers": [

@@ -221,6 +221,33 @@ function RoleView({
           </div>
         ))}
       </div>
+
+      {org && (
+        <section className="flex flex-col gap-2">
+          <h2 className="text-[11px] font-semibold uppercase tracking-[0.4px] text-muted opacity-80">
+            About {org.name}
+          </h2>
+          <div className="h-px w-full bg-line-strong opacity-50" aria-hidden="true" />
+          {org.blurb && <p className="text-sm leading-normal">{org.blurb}</p>}
+          <div className="grid grid-cols-2 gap-2.5 pt-1">
+            <button
+              type="button"
+              onClick={() => toast(`Messaging ${org.name} is coming soon`)}
+              className="h-[50px] rounded-full border border-[rgba(31,26,23,0.12)] bg-card-soft text-[15px] font-semibold text-ink"
+            >
+              Contact
+            </button>
+            <button
+              type="button"
+              onClick={() => toast("Calendar export is coming soon")}
+              className="flex h-[50px] items-center justify-center gap-2 rounded-full border border-[rgba(31,26,23,0.12)] bg-card-soft text-[15px] font-semibold text-ink"
+            >
+              <CalendarIcon size={18} />
+              Add to calendar
+            </button>
+          </div>
+        </section>
+      )}
     </>
   );
 
