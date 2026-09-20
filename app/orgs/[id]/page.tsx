@@ -4,7 +4,8 @@ import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { VolunteerTopNav } from "@/components/chrome/TopNav";
-import { BackIcon } from "@/components/icons";
+import { BackIcon, ExportIcon, GlobeIcon } from "@/components/icons";
+import { toast } from "@/components/ui/Toast";
 import RoleRow from "@/components/roles/RoleRow";
 import { OrgAvatar } from "@/components/ui/Avatar";
 import { spotsLabel } from "@/lib/format";
@@ -81,14 +82,22 @@ export default function OrgProfilePage() {
     <>
       <VolunteerTopNav />
       <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-5 px-6 pb-8 pt-3 lg:min-h-0 lg:max-w-170 lg:pb-14 lg:pt-6">
-        <div className="flex h-11 items-center lg:hidden">
+        <div className="flex h-11 items-center justify-between">
           <button
             type="button"
             aria-label="Back"
             onClick={() => router.back()}
-            className="-ml-2.5 flex size-11 items-center justify-center text-ink"
+            className="-ml-2.5 flex size-11 items-center justify-center text-ink lg:invisible"
           >
             <BackIcon size={24} strokeWidth={2.2} />
+          </button>
+          <button
+            type="button"
+            aria-label="Share this organization"
+            onClick={() => toast("Org sharing is coming soon")}
+            className="-mr-2.5 flex size-11 items-center justify-center text-ink"
+          >
+            <ExportIcon size={22} />
           </button>
         </div>
 
@@ -99,7 +108,7 @@ export default function OrgProfilePage() {
             <div className="flex items-center gap-3.5">
               <OrgAvatar org={org} size={48} />
               <div className="flex flex-col gap-1">
-                <h1 className="font-display text-[29px] font-normal leading-[1.1] tracking-[-0.4px] lg:text-[37px]">
+                <h1 className="font-display text-[26px] font-normal leading-[1.1] tracking-[-0.4px] lg:text-[34px]">
                   {org.name}
                 </h1>
                 <div className="text-[13px] text-muted">
@@ -117,8 +126,9 @@ export default function OrgProfilePage() {
                 href={`https://${org.website}`}
                 target="_blank"
                 rel="noreferrer"
-                className="self-start text-[15px] font-semibold no-underline"
+                className="flex items-center gap-1.5 self-start text-[15px] font-semibold no-underline"
               >
+                <GlobeIcon size={16} />
                 {org.website} ↗
               </a>
             )}
@@ -127,7 +137,7 @@ export default function OrgProfilePage() {
               <h2 className="text-[11px] font-semibold uppercase tracking-[0.4px] text-muted opacity-80">
                 Open roles
               </h2>
-              <div className="h-px w-full bg-line-strong opacity-50" aria-hidden="true" />
+              {/* no section divider here: the first role row draws its own */}
               {openRoles.map((role) => (
                 <RoleRow
                   key={role.id}

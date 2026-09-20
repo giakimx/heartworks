@@ -145,6 +145,15 @@ export function HomeIcon(props: IconProps) {
   );
 }
 
+export function GlobeIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18M12 3a13.5 13.5 0 014 9 13.5 13.5 0 01-4 9 13.5 13.5 0 01-4-9 13.5 13.5 0 014-9z" />
+    </Icon>
+  );
+}
+
 export function ExportIcon(props: IconProps) {
   return (
     <Icon {...props}>
