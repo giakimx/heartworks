@@ -181,7 +181,7 @@ function RoleView({
                 {matchCount === 1 ? "matches" : "match"} your goals.{" "}
               </>
             )}
-            <span className="text-[7px]">
+            <span className="text-xs">
               Logged to your profile once the org confirms your shift.
             </span>
           </div>
