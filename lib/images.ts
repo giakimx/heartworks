@@ -6,7 +6,7 @@ export type ImageEntry = { src: string; width: number; height: number; alt: stri
 
 const IMAGES: Record<string, ImageEntry> = {
   "mural.jpg": {
-    src: "/images/mural.png",
+    src: "/images/mural.jpg",
     width: 1496,
     height: 1184,
     alt: "Volunteers painting the Detroit Body Garage building",
@@ -30,7 +30,7 @@ const IMAGES: Record<string, ImageEntry> = {
     alt: "Wildflowers in a community garden",
   },
   "hero.jpg": {
-    src: "/images/hero.png",
+    src: "/images/hero.jpg",
     width: 1206,
     height: 1416,
     alt: "A group of Detroit neighbors cheering together",
@@ -55,19 +55,19 @@ export function orgIconFor(orgId: string | undefined): string | undefined {
 const ORG_PHOTOS: Record<string, ImageEntry[]> = {
   o_dbg: [
     {
-      src: "/images/org-dbg-1.png",
+      src: "/images/org-dbg-1.jpg",
       width: 1302,
       height: 1046,
       alt: "Inside the Detroit Body Garage gym",
     },
     {
-      src: "/images/org-dbg-2.png",
-      width: 2468,
-      height: 1690,
+      src: "/images/org-dbg-2.jpg",
+      width: 1600,
+      height: 1095,
       alt: "Detroit Body Garage members training together",
     },
     {
-      src: "/images/org-dbg-3.png",
+      src: "/images/org-dbg-3.jpg",
       width: 1072,
       height: 836,
       alt: "The Detroit Body Garage community",
