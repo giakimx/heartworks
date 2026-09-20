@@ -30,7 +30,9 @@ export interface DemoState extends DemoData {
 }
 
 const STORAGE_KEY = "heartworks-demo";
-const VERSION = 1;
+// Bump on any store-shape OR seed-content change: migrate() resets stale
+// localStorage blobs to the fresh seed so the demo never shows old data.
+const VERSION = 2;
 
 export const useDemoStore = create<DemoState>()(
   persist(
