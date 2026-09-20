@@ -36,3 +36,10 @@ read in this order:
 - `8635 Mack Ave` is not in little village. address/neighborhood in seed is flagged `"verify": true`.
 - min age on the role page is a placeholder (`[MIN AGE]`). render only if the role has `minAge`.
 - volunteer names other than gia are sample data.
+
+## running this repo
+
+- `npm run dev` — dev server on :3000
+- `npx vitest run` — state machine / scoring / selectors / demo-loop tests (the demo-loop test is the pitch script in code)
+- `npm run build` — production build
+- demo pill (bottom-left): switch viewer between gia and detroit body garage, reset demo

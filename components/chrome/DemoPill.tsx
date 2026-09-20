@@ -29,6 +29,7 @@ export default function DemoPill() {
     router.push("/org");
   };
   const reset = () => {
+    if (!window.confirm("Reset the demo to its starting state?")) return;
     resetDemo();
     setOpen(false);
     router.push("/");
