@@ -40,3 +40,13 @@ const IMAGES: Record<string, ImageEntry> = {
 export function imageFor(key: string | undefined): ImageEntry | undefined {
   return key ? IMAGES[key] : undefined;
 }
+
+// Org icons for the avatar circles; orgs without one fall back to the
+// colored initials circle.
+const ORG_ICONS: Record<string, string> = {
+  o_dbg: "/images/org-dbg.png",
+};
+
+export function orgIconFor(orgId: string | undefined): string | undefined {
+  return orgId ? ORG_ICONS[orgId] : undefined;
+}

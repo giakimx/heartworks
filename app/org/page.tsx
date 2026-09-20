@@ -5,6 +5,7 @@ import Link from "next/link";
 import { OrgTopNav } from "@/components/chrome/TopNav";
 import Wordmark from "@/components/chrome/Wordmark";
 import { CheckIcon, ChevronRightIcon, PlusIcon } from "@/components/icons";
+import { OrgAvatar } from "@/components/ui/Avatar";
 import ProgressBar from "@/components/ui/ProgressBar";
 import { compactTimeRange, metaDate } from "@/lib/format";
 import { imageFor } from "@/lib/images";
@@ -46,15 +47,7 @@ export default function OrgHomePage() {
             ORGS
           </div>
         </div>
-        {org && (
-          <div
-            aria-label="Org account"
-            className="flex size-9 items-center justify-center rounded-full text-[13px] font-bold text-ink"
-            style={{ background: org.color }}
-          >
-            {org.initials}
-          </div>
-        )}
+        {org && <OrgAvatar org={org} size={36} />}
       </div>
 
       <div className="flex flex-col gap-1 lg:gap-1.5">

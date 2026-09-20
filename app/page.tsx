@@ -142,7 +142,7 @@ export default function LandingPage() {
             width={hero.width}
             height={hero.height}
             priority
-            className="absolute right-0 top-6 h-[420px] w-[480px] rotate-[1.5deg] rounded-[32px] object-cover shadow-[0_1px_2px_rgba(31,26,23,0.06),0_24px_56px_rgba(138,46,26,0.18)]"
+            className="absolute right-0 top-6 h-[420px] w-[480px] rotate-[1.5deg] rounded-[22px] object-cover shadow-[0_1px_2px_rgba(31,26,23,0.06),0_24px_56px_rgba(138,46,26,0.18)]"
           />
           {hydrated && topMatch && topMatchImage && (
             <Link

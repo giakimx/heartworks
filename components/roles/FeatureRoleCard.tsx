@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { HeartFilledIcon } from "@/components/icons";
+import { OrgAvatar } from "@/components/ui/Avatar";
 import ProgressBar from "@/components/ui/ProgressBar";
 import Tag from "@/components/ui/Tag";
 import { compactTimeRange, metaDate, spotsLabel } from "@/lib/format";
@@ -60,7 +61,7 @@ export default function FeatureRoleCard({
         </div>
         {org && (
           <div className="flex items-center gap-2 text-sm font-medium">
-            <div className="size-5 rounded-full" style={{ background: org.color }} />
+            <OrgAvatar org={org} size={20} />
             {org.name}
           </div>
         )}

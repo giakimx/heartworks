@@ -38,7 +38,7 @@ export default function DemoPill() {
   return (
     <div className="fixed bottom-4 left-4 z-50 flex flex-col items-start gap-2">
       {open && (
-        <div className="flex flex-col overflow-hidden rounded-2xl border border-line bg-card shadow-card backdrop-blur-md">
+        <div className="flex flex-col overflow-hidden rounded-[11px] border border-line bg-card shadow-card backdrop-blur-md">
           <button
             type="button"
             onClick={asVolunteer}

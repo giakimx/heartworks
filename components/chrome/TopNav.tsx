@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Wordmark from "@/components/chrome/Wordmark";
 import { PlusIcon } from "@/components/icons";
+import { OrgAvatar } from "@/components/ui/Avatar";
 import {
   orgById,
   orgRoleToConfirm,
@@ -127,14 +128,7 @@ export function OrgTopNav() {
           <PlusIcon size={16} strokeWidth={2.4} />
           Post a role
         </Link>
-        {org && (
-          <div
-            className="flex size-10 items-center justify-center rounded-full text-[13px] font-bold text-ink"
-            style={{ background: org.color }}
-          >
-            {org.initials}
-          </div>
-        )}
+        {org && <OrgAvatar org={org} size={40} />}
       </div>
     </nav>
   );

@@ -236,7 +236,7 @@ export default function PostRolePage() {
         </div>
       </div>
 
-      <div className="flex items-center justify-between rounded-2xl border border-line bg-[rgba(255,255,255,0.8)] px-4 py-3.5">
+      <div className="flex items-center justify-between rounded-[11px] border border-line bg-[rgba(255,255,255,0.8)] px-4 py-3.5">
         <div className="flex flex-col gap-0.5">
           <div className="text-base font-semibold">Volunteers needed</div>
           <div className="text-[13px] text-muted">We stop requests when it&apos;s full</div>

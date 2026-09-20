@@ -71,7 +71,7 @@ export default function ProfilePage() {
             ).map(([value, label]) => (
               <div
                 key={label}
-                className="flex items-baseline gap-2 rounded-2xl border border-line bg-card-soft px-5 py-3.5"
+                className="flex items-baseline gap-2 rounded-[11px] border border-line bg-card-soft px-5 py-3.5"
               >
                 <div className="font-display text-[28px] leading-none">{value}</div>
                 <div className="text-sm text-muted">{label}</div>
@@ -93,7 +93,7 @@ export default function ProfilePage() {
             ).map(([value, label]) => (
               <div
                 key={label}
-                className="flex flex-col gap-0.5 rounded-2xl border border-line bg-card-soft p-3.5"
+                className="flex flex-col gap-0.5 rounded-[11px] border border-line bg-card-soft p-3.5"
               >
                 <div className="font-display text-[26px] leading-none">{value}</div>
                 <div className="text-[13px] text-muted">{label}</div>

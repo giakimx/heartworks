@@ -49,7 +49,7 @@ export default function StampWall({
         ))}
         <Link
           href="/discover"
-          className="absolute box-border flex h-[182px] w-35 flex-col items-center justify-center gap-2 rounded-md border-[1.5px] border-dashed border-[rgba(31,26,23,0.28)] p-3 text-center text-[13px] font-semibold text-muted no-underline"
+          className="absolute box-border flex h-[182px] w-35 flex-col items-center justify-center gap-2 rounded-[4px] border-[1.5px] border-dashed border-[rgba(31,26,23,0.28)] p-3 text-center text-[13px] font-semibold text-muted no-underline"
           style={{ left: slot.left + 6, top: slot.top + 16, transform: `rotate(${slot.r}deg)` }}
         >
           <PlusIcon size={22} />
@@ -68,7 +68,7 @@ export default function StampWall({
         ))}
         <Link
           href="/discover"
-          className="box-border flex h-[182px] w-35 shrink-0 rotate-3 flex-col items-center justify-center gap-2 rounded-md border-[1.5px] border-dashed border-[rgba(31,26,23,0.28)] p-3 text-center text-[13px] font-semibold text-muted no-underline"
+          className="box-border flex h-[182px] w-35 shrink-0 rotate-3 flex-col items-center justify-center gap-2 rounded-[4px] border-[1.5px] border-dashed border-[rgba(31,26,23,0.28)] p-3 text-center text-[13px] font-semibold text-muted no-underline"
         >
           <PlusIcon size={22} />
           Find your next stamp
@@ -77,7 +77,7 @@ export default function StampWall({
           <div
             key={i}
             aria-hidden="true"
-            className="box-border h-[182px] w-35 shrink-0 rounded-md border-[1.5px] border-dashed border-[rgba(31,26,23,0.16)]"
+            className="box-border h-[182px] w-35 shrink-0 rounded-[4px] border-[1.5px] border-dashed border-[rgba(31,26,23,0.16)]"
             style={{ transform: `rotate(${EMPTY_ROTATIONS[i % EMPTY_ROTATIONS.length]}deg)` }}
           />
         ))}

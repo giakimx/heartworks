@@ -8,7 +8,7 @@ import { VolunteerTopNav } from "@/components/chrome/TopNav";
 import { CalendarIcon, CheckIcon, ExportIcon, PinIcon } from "@/components/icons";
 import InfoTile, { DateTile, IconTile } from "@/components/ui/InfoTile";
 import ProgressBar from "@/components/ui/ProgressBar";
-import { AvatarStack } from "@/components/ui/Avatar";
+import { AvatarStack, OrgAvatar } from "@/components/ui/Avatar";
 import { toast } from "@/components/ui/Toast";
 import {
   dayOfMonth,
@@ -126,7 +126,7 @@ function RoleView({
     <div className="flex flex-col gap-2.5">
       {org && (
         <div className="flex items-center gap-2 text-sm font-semibold">
-          <div className="size-[22px] rounded-full" style={{ background: org.color }} />
+          <OrgAvatar org={org} size={22} />
           {org.name}
         </div>
       )}
@@ -181,7 +181,9 @@ function RoleView({
                 {matchCount === 1 ? "matches" : "match"} your goals.{" "}
               </>
             )}
-            Logged to your profile once the org confirms your shift.
+            <span className="text-[7px]">
+              Logged to your profile once the org confirms your shift.
+            </span>
           </div>
         )}
       </section>
