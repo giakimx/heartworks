@@ -12,6 +12,7 @@ import {
   ChevronRightIcon,
   ExportIcon,
   HeartFilledIcon,
+  ListIcon,
   PinIcon,
 } from "@/components/icons";
 import InfoTile, { DateTile, IconTile } from "@/components/ui/InfoTile";
@@ -186,6 +187,16 @@ function RoleView({
           title={role.address ?? role.neighborhood}
           sub={role.address ? `${role.neighborhood} neighborhood` : undefined}
         />
+        {facts.length > 0 && (
+          <div className="flex items-center gap-3.5">
+            <IconTile>
+              <ListIcon size={20} />
+            </IconTile>
+            <div className="text-[13px] font-medium text-muted">
+              {facts.join(" · ")}
+            </div>
+          </div>
+        )}
         <button
           type="button"
           onClick={() => setMoreOpen(true)}
@@ -254,10 +265,6 @@ function RoleView({
             {role.description}
           </p>
         </section>
-      )}
-
-      {facts.length > 0 && (
-        <div className="text-[13px] font-medium text-muted">{facts.join(" · ")}</div>
       )}
 
       {org && (
