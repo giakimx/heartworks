@@ -22,10 +22,9 @@ import {
 } from "@/components/icons";
 import FeatureRoleCard from "@/components/roles/FeatureRoleCard";
 import RoleCard from "@/components/roles/RoleCard";
-import RoleRow from "@/components/roles/RoleRow";
 import { FilterChip } from "@/components/ui/Chip";
-import { listPhrase, spotsLabel } from "@/lib/format";
-import { filledCount, matchedLearnTags } from "@/lib/scoring";
+import { listPhrase } from "@/lib/format";
+import { matchedLearnTags } from "@/lib/scoring";
 import { discoverRoles, orgById, searchRoles, volunteerById } from "@/lib/selectors";
 import { useDemoStore, useHydrated } from "@/lib/store";
 
@@ -205,15 +204,19 @@ export default function DiscoverPage() {
                 {results.length} {results.length === 1 ? "role" : "roles"}
               </div>
             </div>
-            {results.map((role) => (
-              <RoleRow
-                key={role.id}
-                role={role}
-                org={orgById(state, role.orgId)}
-                learnTag={matchedLearnTags(role, volunteer, 1)[0]}
-                spotsText={spotsLabel(filledCount(role, state.applications), role.spots)}
-              />
-            ))}
+            {results.length > 0 && (
+              <div className="grid grid-cols-1 gap-4 pt-1 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
+                {results.map((role) => (
+                  <RoleCard
+                    key={role.id}
+                    role={role}
+                    org={orgById(state, role.orgId)}
+                    learnTag={matchedLearnTags(role, volunteer, 1)[0]}
+                    applications={state.applications}
+                  />
+                ))}
+              </div>
+            )}
             {results.length === 0 && (
               <div className="flex flex-col gap-1 border-t border-line py-4 text-[15px] text-muted">
                 <div>Nothing matches &ldquo;{query.trim()}&rdquo; yet.</div>
@@ -247,19 +250,8 @@ export default function DiscoverPage() {
                 {filtered.length} {filtered.length === 1 ? "role" : "roles"}
               </div>
             </div>
-            <div className="flex flex-col gap-1 lg:hidden">
-              {filtered.map((role) => (
-                <RoleRow
-                  key={role.id}
-                  role={role}
-                  org={orgById(state, role.orgId)}
-                  learnTag={matchedLearnTags(role, volunteer, 1)[0]}
-                  spotsText={spotsLabel(filledCount(role, state.applications), role.spots)}
-                />
-              ))}
-            </div>
             {filtered.length > 0 && (
-              <div className="hidden grid-cols-3 gap-5 pt-2 lg:grid">
+              <div className="grid grid-cols-1 gap-4 pt-1 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
                 {filtered.map((role) => (
                   <RoleCard
                     key={role.id}
