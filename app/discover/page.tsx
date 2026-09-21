@@ -127,7 +127,7 @@ export default function DiscoverPage() {
       <VolunteerTopNav />
       <main className="mx-auto flex w-full max-w-120 flex-col gap-5 px-6 pb-32 pt-3 lg:max-w-260 lg:gap-8 lg:px-0 lg:pb-14 lg:pt-6">
         <div className="flex h-12 items-center justify-between lg:hidden">
-          <Link href="/" aria-label="Heartworks home">
+          <Link href="/discover" aria-label="Heartworks feed">
             <Wordmark size={20} />
           </Link>
           <div className="flex items-center gap-1">

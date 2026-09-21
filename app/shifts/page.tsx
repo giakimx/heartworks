@@ -26,7 +26,7 @@ export default function ShiftsPage() {
     <VolunteerTopNav />
     <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-5 px-6 pb-32 pt-3 lg:min-h-0 lg:max-w-170 lg:pb-14 lg:pt-6">
       <div className="flex h-12 items-center justify-between lg:hidden">
-        <Link href="/" aria-label="Heartworks home">
+        <Link href="/discover" aria-label="Heartworks feed">
           <Wordmark size={20} />
         </Link>
       </div>

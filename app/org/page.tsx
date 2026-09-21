@@ -42,7 +42,7 @@ export default function OrgHomePage() {
     <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-5 px-6 pb-7 pt-3 lg:min-h-0 lg:max-w-260 lg:gap-8 lg:px-0 lg:pb-14 lg:pt-6">
       <div className="flex h-12 items-center justify-between lg:hidden">
         <div className="flex items-center gap-2">
-          <Link href="/" aria-label="Heartworks home">
+          <Link href="/org" aria-label="Heartworks org home">
             <Wordmark size={20} />
           </Link>
           <div className="flex h-[22px] items-center rounded-full bg-ink/8 px-2 text-[11px] font-bold tracking-[0.4px] text-muted">

@@ -5,7 +5,7 @@ export default function NotFound() {
   return (
     <main className="mx-auto flex min-h-dvh w-full max-w-120 flex-col gap-6 px-6 pb-7 pt-6">
       <div className="flex h-8 items-center justify-center">
-        <Link href="/" aria-label="Heartworks home">
+        <Link href="/discover" aria-label="Heartworks feed">
           <Wordmark size={22} />
         </Link>
       </div>
