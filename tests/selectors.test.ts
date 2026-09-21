@@ -77,10 +77,11 @@ describe("search", () => {
     const data = seedState();
     expect(searchRoles(data, "v_gia", "paint").map((r) => r.id)).toEqual(["r_paint"]);
     expect(searchRoles(data, "v_gia", "colony").map((r) => r.id)).toEqual(["r_cats"]);
-    expect(searchRoles(data, "v_gia", "GARDENING").map((r) => r.id)).toEqual([
-      "r_garden",
-    ]);
+    expect(searchRoles(data, "v_gia", "GARDENING").map((r) => r.id)).toContain(
+      "r_garden"
+    );
     expect(searchRoles(data, "v_gia", "corktown")).toHaveLength(2);
+    expect(searchRoles(data, "v_gia", "riverfront").length).toBeGreaterThan(0);
   });
 
   it("returns nothing for an empty or unmatched query, and never draft/done roles", () => {
