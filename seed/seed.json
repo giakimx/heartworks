@@ -356,7 +356,8 @@
       ],
       "impact": "Every secured house makes the block safer for the families still on it.",
       "description": "Crew day in Osborn!\nWe're boarding vacant houses, clearing two lots and hauling debris.\n\nTools, boards and lunch provided. A truck helps a ton if you have one.",
-      "goodForGroups": true
+      "goodForGroups": true,
+      "image": "evt-boardup.jpg"
     },
     {
       "id": "r_tutor",
@@ -383,7 +384,8 @@
       "description": "Homework help and reading practice with our K-8 crew.\nNo teaching experience needed - we train you and pair you with the same kids each week.",
       "trainingProvided": true,
       "backgroundCheck": true,
-      "minAge": 18
+      "minAge": 18,
+      "image": "evt-tutor.jpg"
     },
     {
       "id": "r_baskets",
@@ -408,7 +410,8 @@
       ],
       "impact": "A warm welcome in the first weeks helps moms and babies get a healthy start.",
       "description": "We're assembling 60 welcome baskets - diapers, books, handwritten notes.\nBring your best encouraging words; we'll supply the rest.",
-      "goodForGroups": true
+      "goodForGroups": true,
+      "image": "evt-baskets.jpg"
     },
     {
       "id": "r_harvest",
@@ -431,7 +434,8 @@
       "skillsNeeded": [],
       "impact": "Everything picked today goes home free with North End neighbors this weekend.",
       "description": "Harvest day! We're picking collards, tomatoes and squash, washing and boxing them for free distribution.\nDress for dirt; gloves and coffee on us.",
-      "goodForGroups": true
+      "goodForGroups": true,
+      "image": "evt-harvest.jpg"
     },
     {
       "id": "r_stem",
@@ -456,7 +460,8 @@
       ],
       "impact": "A kid who launches a bottle rocket on Saturday sees college differently on Monday.",
       "description": "Help run hands-on demo tables - bottle rockets, circuits, bridges - for 100+ Detroit kids and their families.\nStudent engineers lead each table; you keep the energy up and the line moving.",
-      "trainingProvided": true
+      "trainingProvided": true,
+      "image": "evt-stem.jpg"
     },
     {
       "id": "r_greet",
@@ -479,7 +484,8 @@
       "skillsNeeded": [],
       "impact": "Friendly faces keep the riverwalk feeling like it belongs to everyone.",
       "description": "Welcome visitors at Cullen Plaza, answer questions, hand out maps and point folks to the carousel.\nOrientation 30 minutes before your shift.",
-      "trainingProvided": true
+      "trainingProvided": true,
+      "image": "evt-greet.jpg"
     },
     {
       "id": "r_plant",
@@ -502,7 +508,8 @@
       "skillsNeeded": [],
       "impact": "Ten thousand bulbs this fall become the riverfront's spring welcome.",
       "description": "Bulb planting along the greenway - daffodils and alliums by the thousand.\nTools, gloves and cider provided. Rain or shine.",
-      "goodForGroups": true
+      "goodForGroups": true,
+      "image": "evt-plant.jpg"
     },
     {
       "id": "r_market",
@@ -527,7 +534,8 @@
       ],
       "impact": "A smooth 6 am setup means 40,000 Detroiters shop local by 9.",
       "description": "Early birds only! We're placing vendor signs, setting barricades and directing trucks into Shed 2 and 3.\nCoffee and a market breakfast on us when doors open.",
-      "goodForGroups": true
+      "goodForGroups": true,
+      "image": "evt-market.jpg"
     },
     {
       "id": "r_trail",
@@ -554,7 +562,8 @@
       "description": "We're rebuilding two footbridges and clearing brush on the stable loop.\nLong pants and closed shoes required; tools and training provided.",
       "trainingProvided": true,
       "goodForGroups": true,
-      "minAge": 16
+      "minAge": 16,
+      "image": "evt-trail.jpg"
     },
     {
       "id": "r_build",
@@ -579,7 +588,8 @@
       ],
       "impact": "Every board we salvage turns a blighted corner into a place neighbors are proud of.",
       "description": "Deconstruction and rebuild at the Artist Village block.\nExperienced builders lead every crew - come learn or come teach.",
-      "minAge": 18
+      "minAge": 18,
+      "image": "evt-build.jpg"
     }
   ],
   "applications": [

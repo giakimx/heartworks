@@ -35,6 +35,67 @@ const IMAGES: Record<string, ImageEntry> = {
     height: 1416,
     alt: "A group of Detroit neighbors cheering together",
   },
+  // Event photos via Openverse (CC / public domain) — see public/images/CREDITS.md
+  "evt-boardup.jpg": {
+    src: "/images/evt-boardup.jpg",
+    width: 1600,
+    height: 1067,
+    alt: "Cleanup volunteers handing out supplies",
+  },
+  "evt-tutor.jpg": {
+    src: "/images/evt-tutor.jpg",
+    width: 1600,
+    height: 1043,
+    alt: "A volunteer reading with a classroom of kids",
+  },
+  "evt-baskets.jpg": {
+    src: "/images/evt-baskets.jpg",
+    width: 1600,
+    height: 1200,
+    alt: "Volunteers loading donation boxes",
+  },
+  "evt-harvest.jpg": {
+    src: "/images/evt-harvest.jpg",
+    width: 1600,
+    height: 1200,
+    alt: "Rows of crops at an urban farm",
+  },
+  "evt-stem.jpg": {
+    src: "/images/evt-stem.jpg",
+    width: 1204,
+    height: 1600,
+    alt: "A student-built robot on a workbench",
+  },
+  "evt-greet.jpg": {
+    src: "/images/evt-greet.jpg",
+    width: 1600,
+    height: 1200,
+    alt: "The view across the water from the Detroit Riverwalk",
+  },
+  "evt-plant.jpg": {
+    src: "/images/evt-plant.jpg",
+    width: 1600,
+    height: 933,
+    alt: "Volunteers planting a new garden bed",
+  },
+  "evt-market.jpg": {
+    src: "/images/evt-market.jpg",
+    width: 1067,
+    height: 1600,
+    alt: "Fresh produce stacked at a market stall",
+  },
+  "evt-trail.jpg": {
+    src: "/images/evt-trail.jpg",
+    width: 1600,
+    height: 1068,
+    alt: "Volunteers clearing a fallen log from a trail",
+  },
+  "evt-build.jpg": {
+    src: "/images/evt-build.jpg",
+    width: 1600,
+    height: 1200,
+    alt: "Two smiling volunteers with paint cans at a build site",
+  },
 };
 
 export function imageFor(key: string | undefined): ImageEntry | undefined {
