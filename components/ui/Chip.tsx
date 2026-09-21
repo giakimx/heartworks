@@ -45,7 +45,7 @@ export function FilterChip({
       type="button"
       aria-pressed={on}
       onClick={onClick}
-      className={`h-10 shrink-0 rounded-full px-4 text-sm transition-colors duration-150 ease-out ${
+      className={`h-8 shrink-0 rounded-full px-3 text-[13px] transition-colors duration-150 ease-out ${
         on
           ? "border border-ink bg-ink font-semibold text-white"
           : "border border-[rgba(31,26,23,0.12)] bg-card-soft font-medium text-ink"
