@@ -663,6 +663,20 @@
       "date": "2026-06-06",
       "image": "garden.jpg",
       "place": "Corktown"
+    },
+    {
+      "id": "s3",
+      "volunteerId": "v_gia",
+      "roleId": null,
+      "orgId": "o_bd",
+      "hours": 2,
+      "skills": [
+        "Tutoring"
+      ],
+      "date": "2026-07-18",
+      "image": "evt-tutor.jpg",
+      "place": "Little Village",
+      "_note": "youth art tutoring afternoon at the Brilliant Detroit hub"
     }
   ]
 }

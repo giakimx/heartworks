@@ -53,12 +53,12 @@ describe("the pitch script", () => {
 
     // 8. profile shows the new detroit body garage stamp and updated totals
     const stamps = stampsFor(s, "v_gia");
-    expect(stamps).toHaveLength(3);
+    expect(stamps).toHaveLength(4);
     const newStamp = stamps.find((st) => st.roleId === "r_paint")!;
     expect(newStamp.orgId).toBe("o_dbg");
     expect(newStamp.hours).toBe(3);
     expect(newStamp.skills).toEqual(["Mural painting", "Teamwork"]);
-    expect(profileStats(s, "v_gia")).toEqual({ shifts: 3, hours: 9, skills: 4 });
+    expect(profileStats(s, "v_gia")).toEqual({ shifts: 4, hours: 11, skills: 5 });
     const mural = verifiedSkills(s, "v_gia").find((v) => v.skill === "Mural painting");
     expect(mural?.confirmedBy).toEqual(["Detroit Body Garage"]);
   });

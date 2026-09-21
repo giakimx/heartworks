@@ -21,9 +21,9 @@ describe("derived values on the untouched seed", () => {
     expect(filledCount(paint, data.applications)).toBe(4);
   });
 
-  it("gia's profile derives 2 shifts and 6 hours from her stamps", () => {
+  it("gia's profile derives 3 shifts and 8 hours from her stamps", () => {
     const data = seedState();
-    expect(profileStats(data, "v_gia")).toEqual({ shifts: 2, hours: 6, skills: 2 });
+    expect(profileStats(data, "v_gia")).toEqual({ shifts: 3, hours: 8, skills: 3 });
   });
 
   it("verified skills group by skill with confirming org names", () => {
