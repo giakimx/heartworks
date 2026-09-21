@@ -74,6 +74,8 @@ export default function DiscoverPage() {
   const [filter, setFilter] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [allSkills, setAllSkills] = useState(false);
+  const [allNeighborhoods, setAllNeighborhoods] = useState(false);
   const volunteerId = state.viewer.kind === "volunteer" ? state.viewer.id : "v_gia";
   const volunteer = volunteerById(state, volunteerId);
 
@@ -339,11 +341,22 @@ export default function DiscoverPage() {
         {/* browse by skills */}
         {hydrated && !searching && !filter && skillCounts.length > 0 && (
           <section className="flex flex-col gap-3 lg:gap-4">
-            <h2 className="font-display text-xl font-normal lg:text-2xl">
-              Browse by skills
-            </h2>
+            <div className="flex items-baseline justify-between">
+              <h2 className="font-display text-xl font-normal lg:text-2xl">
+                Browse by skills
+              </h2>
+              {skillCounts.length > 9 && (
+                <button
+                  type="button"
+                  onClick={() => setAllSkills(!allSkills)}
+                  className="text-[13px] font-semibold text-accent-ink"
+                >
+                  {allSkills ? "View less" : "View all ›"}
+                </button>
+              )}
+            </div>
             <div className="grid grid-cols-2 gap-2.5 lg:grid-cols-3 lg:gap-4">
-              {skillCounts.map(([skill, count], i) => (
+              {(allSkills ? skillCounts : skillCounts.slice(0, 9)).map(([skill, count], i) => (
                 <button
                   key={skill}
                   type="button"
@@ -384,11 +397,25 @@ export default function DiscoverPage() {
         {/* browse by neighborhood */}
         {hydrated && !searching && !filter && neighborhoodCounts.length > 0 && (
           <section className="flex flex-col gap-3 lg:gap-4">
-            <h2 className="font-display text-xl font-normal lg:text-2xl">
-              Browse by neighborhood
-            </h2>
+            <div className="flex items-baseline justify-between">
+              <h2 className="font-display text-xl font-normal lg:text-2xl">
+                Browse by neighborhood
+              </h2>
+              {neighborhoodCounts.length > 9 && (
+                <button
+                  type="button"
+                  onClick={() => setAllNeighborhoods(!allNeighborhoods)}
+                  className="text-[13px] font-semibold text-accent-ink"
+                >
+                  {allNeighborhoods ? "View less" : "View all ›"}
+                </button>
+              )}
+            </div>
             <div className="grid grid-cols-2 gap-2.5 lg:grid-cols-3 lg:gap-4">
-              {neighborhoodCounts.map(([name, count], i) => (
+              {(allNeighborhoods
+                ? neighborhoodCounts
+                : neighborhoodCounts.slice(0, 9)
+              ).map(([name, count], i) => (
                 <button
                   key={name}
                   type="button"
