@@ -28,7 +28,7 @@ function NavPill({
     <Link
       href={href as never}
       aria-current={current ? "page" : undefined}
-      className={`flex h-11 items-center rounded-full px-3.5 text-[15px] font-semibold no-underline ${
+      className={`flex h-8 items-center rounded-full px-3 text-[13px] font-semibold no-underline ${
         current ? "bg-ink/7 text-ink" : "text-muted"
       }`}
     >
@@ -46,12 +46,12 @@ export function VolunteerTopNav() {
   return (
     <nav
       aria-label="Main"
-      className="hidden h-19 items-center justify-between px-12 lg:flex"
+      className="relative hidden h-19 items-center justify-between px-12 lg:flex"
     >
       <Link href="/discover" className="text-ink no-underline">
         <Wordmark size={22} />
       </Link>
-      <div className="flex items-center gap-1">
+      <div className="absolute left-1/2 flex -translate-x-1/2 items-center gap-1">
         <NavPill href="/discover" label="Discover" current={pathname === "/discover"} />
         <NavPill href="/shifts" label="My shifts" current={pathname === "/shifts"} />
         <NavPill href="/profile" label="Community" current={pathname === "/profile"} />
@@ -83,7 +83,7 @@ export function OrgTopNav() {
   return (
     <nav
       aria-label="Main"
-      className="hidden h-19 items-center justify-between px-12 lg:flex"
+      className="relative hidden h-19 items-center justify-between px-12 lg:flex"
     >
       <div className="flex items-center gap-2.5">
         <Link href="/org" className="text-ink no-underline">
@@ -93,7 +93,7 @@ export function OrgTopNav() {
           ORGS
         </div>
       </div>
-      <div className="flex items-center gap-1">
+      <div className="absolute left-1/2 flex -translate-x-1/2 items-center gap-1">
         <NavPill href="/org" label="Home" current={pathname === "/org"} />
         <NavPill
           href={requestsHref}
