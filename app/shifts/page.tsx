@@ -32,7 +32,7 @@ export default function ShiftsPage() {
       </div>
 
       <h1 className="font-display text-[30px] font-normal leading-[1.1] tracking-[-0.4px] lg:text-[44px]">
-        My shifts
+        My contributions
       </h1>
 
       {hydrated && shifts.length === 0 && (

@@ -53,7 +53,7 @@ export function VolunteerTopNav() {
       </Link>
       <div className="absolute left-1/2 flex -translate-x-1/2 items-center gap-1">
         <NavPill href="/discover" label="Discover" current={pathname === "/discover"} />
-        <NavPill href="/shifts" label="My shifts" current={pathname === "/shifts"} />
+        <NavPill href="/shifts" label="My contributions" current={pathname === "/shifts"} />
         <NavPill href="/profile" label="Community" current={pathname === "/profile"} />
       </div>
       <div className="flex items-center gap-3">

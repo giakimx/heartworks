@@ -8,7 +8,7 @@ import { CalendarIcon, HomeIcon, PersonIcon } from "@/components/icons";
 
 const tabs = [
   { href: "/discover", label: "Discover", Icon: HomeIcon },
-  { href: "/shifts", label: "My shifts", Icon: CalendarIcon },
+  { href: "/shifts", label: "My contributions", Icon: CalendarIcon },
   { href: "/profile", label: "Community", Icon: PersonIcon },
 ] as const;
 
