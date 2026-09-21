@@ -10,13 +10,15 @@ import FeatureRoleCard from "@/components/roles/FeatureRoleCard";
 import RoleCard from "@/components/roles/RoleCard";
 import RoleRow from "@/components/roles/RoleRow";
 import { FilterChip } from "@/components/ui/Chip";
-import { toast } from "@/components/ui/Toast";
 import { listPhrase, spotsLabel } from "@/lib/format";
 import { filledCount, matchedLearnTags } from "@/lib/scoring";
 import { discoverRoles, orgById, searchRoles, volunteerById } from "@/lib/selectors";
 import { useDemoStore, useHydrated } from "@/lib/store";
 
 const FILTERS = ["For you", "This week", "Near me", "Groups", "Remote"];
+
+// browse tile icon fills, cycled (the avatar palette from the design system)
+const TILE_COLORS = ["#F2B8A0", "#C9B8E8", "#A9D4B8", "#F3D48A"];
 
 // Within the next 7 days of the viewer's "today" (parsed at local noon so
 // bare ISO dates don't shift a day).
@@ -53,15 +55,21 @@ export default function DiscoverPage() {
   const [topMatch, ...rest] = roles;
   const goals = volunteer ? [...volunteer.learnGoals, ...volunteer.brings] : [];
   const hasGoals = goals.length > 0;
-  const neighborhoods = [...new Set(roles.map((r) => r.neighborhood))];
 
-  // group the remaining roles by neighborhood, preserving match order (mobile)
-  const groups = new Map<string, typeof rest>();
-  for (const role of rest) {
-    const list = groups.get(role.neighborhood) ?? [];
-    list.push(role);
-    groups.set(role.neighborhood, list);
-  }
+  // browse tiles: live-role counts per taught skill and per neighborhood
+  const skillCounts = state.skills.learn
+    .map((skill): [string, number] => [
+      skill,
+      roles.filter((r) => r.skillsTaught.includes(skill)).length,
+    ])
+    .filter(([, count]) => count > 0)
+    .sort((a, b) => b[1] - a[1]);
+  const neighborhoodCounts = [...new Set(roles.map((r) => r.neighborhood))].map(
+    (name): [string, number] => [
+      name,
+      roles.filter((r) => r.neighborhood === name).length,
+    ]
+  );
 
   const filtered = !filter
     ? []
@@ -199,16 +207,6 @@ export default function DiscoverPage() {
               onClick={() => setFilter(filter === label ? null : label)}
             />
           ))}
-          <div className="hidden gap-2 lg:flex">
-            {neighborhoods.map((n) => (
-              <FilterChip
-                key={n}
-                label={n}
-                on={filter === n}
-                onClick={() => setFilter(filter === n ? null : n)}
-              />
-            ))}
-          </div>
         </div>
 
         {/* active filter: one flat list for both layouts */}
@@ -268,23 +266,14 @@ export default function DiscoverPage() {
           />
         )}
 
-        {/* mobile: rows grouped by neighborhood */}
-        {hydrated &&
-          !searching &&
-          !filter &&
-          [...groups.entries()].map(([name, list]) => (
-            <section key={name} className="flex flex-col gap-1 lg:hidden">
-              <div className="flex items-baseline justify-between pb-1">
-                <h2 className="font-display text-xl font-normal">{name}</h2>
-                <button
-                  type="button"
-                  onClick={() => toast("Coming soon")}
-                  className="text-sm font-semibold text-accent-ink"
-                >
-                  See all
-                </button>
-              </div>
-              {list.map((role) => (
+        {/* popular events: one compact list, two columns on desktop */}
+        {hydrated && !searching && !filter && rest.length > 0 && (
+          <section className="flex flex-col gap-1 lg:gap-2">
+            <h2 className="pb-1 font-display text-xl font-normal lg:text-2xl">
+              Popular events
+            </h2>
+            <div className="flex flex-col gap-1 lg:grid lg:grid-cols-2 lg:gap-x-12">
+              {rest.map((role) => (
                 <RoleRow
                   key={role.id}
                   role={role}
@@ -293,22 +282,80 @@ export default function DiscoverPage() {
                   spotsText={spotsLabel(filledCount(role, state.applications), role.spots)}
                 />
               ))}
-            </section>
-          ))}
+            </div>
+          </section>
+        )}
 
-        {/* desktop: 3-up grid */}
-        {hydrated && !searching && !filter && rest.length > 0 && (
-          <section className="hidden flex-col gap-4 lg:flex">
-            <h2 className="font-display text-2xl font-normal">More near you</h2>
-            <div className="grid grid-cols-3 gap-5">
-              {rest.map((role) => (
-                <RoleCard
-                  key={role.id}
-                  role={role}
-                  org={orgById(state, role.orgId)}
-                  learnTag={matchedLearnTags(role, volunteer, 1)[0]}
-                  applications={state.applications}
-                />
+        {/* browse by skills */}
+        {hydrated && !searching && !filter && skillCounts.length > 0 && (
+          <section className="flex flex-col gap-3 lg:gap-4">
+            <h2 className="font-display text-xl font-normal lg:text-2xl">
+              Browse by skills
+            </h2>
+            <div className="grid grid-cols-2 gap-2.5 lg:grid-cols-3 lg:gap-4">
+              {skillCounts.map(([skill, count], i) => (
+                <button
+                  key={skill}
+                  type="button"
+                  onClick={() => {
+                    setQuery(skill);
+                    setSearchOpen(true);
+                  }}
+                  className="flex items-center gap-3 rounded-card border border-line bg-card p-3.5 text-left shadow-card"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="flex size-9 shrink-0 items-center justify-center rounded-full text-sm font-bold text-ink/70"
+                    style={{ background: TILE_COLORS[i % TILE_COLORS.length] }}
+                  >
+                    {skill[0]}
+                  </span>
+                  <span className="flex min-w-0 flex-col">
+                    <span className="truncate text-sm font-semibold text-ink">
+                      {skill}
+                    </span>
+                    <span className="text-[13px] text-muted">
+                      {count} {count === 1 ? "event" : "events"}
+                    </span>
+                  </span>
+                </button>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* browse by neighborhood */}
+        {hydrated && !searching && !filter && neighborhoodCounts.length > 0 && (
+          <section className="flex flex-col gap-3 lg:gap-4">
+            <h2 className="font-display text-xl font-normal lg:text-2xl">
+              Browse by neighborhood
+            </h2>
+            <div className="grid grid-cols-2 gap-2.5 lg:grid-cols-3 lg:gap-4">
+              {neighborhoodCounts.map(([name, count], i) => (
+                <button
+                  key={name}
+                  type="button"
+                  onClick={() => setFilter(name)}
+                  className="flex items-center gap-3 rounded-card border border-line bg-card p-3.5 text-left shadow-card"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="flex size-9 shrink-0 items-center justify-center rounded-full text-sm font-bold text-ink/70"
+                    style={{
+                      background: TILE_COLORS[(i + 2) % TILE_COLORS.length],
+                    }}
+                  >
+                    {name[0]}
+                  </span>
+                  <span className="flex min-w-0 flex-col">
+                    <span className="truncate text-sm font-semibold text-ink">
+                      {name}
+                    </span>
+                    <span className="text-[13px] text-muted">
+                      {count} {count === 1 ? "event" : "events"}
+                    </span>
+                  </span>
+                </button>
               ))}
             </div>
           </section>
