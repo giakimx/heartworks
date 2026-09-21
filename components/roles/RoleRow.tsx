@@ -31,7 +31,11 @@ export default function RoleRow({
         </div>
         <div className="text-[17px] font-semibold leading-[1.25]">{role.title}</div>
         <div className="flex items-center gap-2 text-[13px] text-muted">
-          {learnTag && <div className="font-semibold text-accent-ink">Learn · {learnTag}</div>}
+          {learnTag && (
+            <div className="rounded-md border border-accent-ink/30 px-1.5 py-0.5 text-xs font-semibold text-accent-ink">
+              Learn · {learnTag}
+            </div>
+          )}
           {spotsText && <div>{spotsText}</div>}
           {trailing}
         </div>
