@@ -188,7 +188,7 @@ export default function PostRolePage() {
       <div className="flex items-end justify-between">
         <div className="flex flex-col gap-2">
           <h1 className="font-display text-[30px] font-normal leading-[1.15] tracking-[-0.4px] lg:text-[44px] lg:leading-[1.08] lg:tracking-[-0.8px]">
-            Post a role
+            Post an event
           </h1>
           <p className="text-[15px] leading-normal text-muted">
             Two minutes. Say what needs doing and what someone walks away knowing.
@@ -422,7 +422,7 @@ export default function PostRolePage() {
         onClick={submit}
         className="flex h-11 items-center justify-center rounded-full bg-ink text-[15px] font-semibold text-white"
       >
-        Post role
+        Post event
       </button>
       </div>
 

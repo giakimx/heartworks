@@ -112,7 +112,7 @@ export function OrgTopNav() {
           className="flex h-11 items-center gap-1.5 rounded-full bg-ink px-[18px] text-sm font-semibold text-white no-underline"
         >
           <PlusIcon size={16} strokeWidth={2.4} />
-          Post a role
+          Post an event
         </Link>
         {org && <OrgAvatar org={org} size={40} />}
       </div>

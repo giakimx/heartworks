@@ -143,7 +143,7 @@ export default function OrgHomePage() {
         className="flex h-14 items-center justify-center gap-2 rounded-full bg-ink text-base font-semibold text-white no-underline lg:hidden"
       >
         <PlusIcon size={18} strokeWidth={2.4} />
-        Post a role
+        Post an event
       </Link>
     </main>
     </>
