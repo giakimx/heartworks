@@ -27,15 +27,16 @@ export default function RoleRow({
       className="flex items-center gap-3.5 border-t border-line py-3.5 text-ink no-underline"
     >
       <div className="flex min-w-0 grow flex-col gap-[5px]">
-        <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[13px] font-medium text-muted">
+        {/* single line: a too-long org name ellipsizes instead of wrapping */}
+        <div className="flex items-center gap-1.5 text-[13px] font-medium text-muted">
           {metaDate(role.date) && (
-            <span className="whitespace-nowrap">{metaDate(role.date)}</span>
+            <span className="shrink-0 whitespace-nowrap">{metaDate(role.date)}</span>
           )}
-          {metaDate(role.date) && org && <span>·</span>}
+          {metaDate(role.date) && org && <span className="shrink-0">·</span>}
           {org && (
-            <span className="flex items-center gap-1.5">
+            <span className="flex min-w-0 items-center gap-1.5">
               <OrgAvatar org={org} size={16} />
-              {org.name}
+              <span className="truncate">{org.name}</span>
             </span>
           )}
         </div>
