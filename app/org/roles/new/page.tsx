@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { OrgTopNav } from "@/components/chrome/TopNav";
-import { BackIcon, MinusIcon, PlusIcon } from "@/components/icons";
+import { BackIcon, MinusIcon, PlusIcon, SearchIcon } from "@/components/icons";
 import RolePreviewCard from "@/components/org/RolePreviewCard";
 import { Chip } from "@/components/ui/Chip";
 import Segmented from "@/components/ui/Segmented";
@@ -16,10 +16,12 @@ import type { Role, WorkType } from "@/lib/types";
 
 const FLAGS = ["Training provided", "Good for groups", "Background check", "Minimum age"];
 
-// "Sat, Oct 3" → ISO date in the showcase year; blank/unparseable → undefined.
+// The date field is a native date input, so it hands us ISO directly;
+// anything else (old drafts) falls through the loose parser.
 function parseDate(text: string): string | undefined {
   const cleaned = text.trim().replace(/^[A-Za-z]{3,},\s*/, "");
   if (!cleaned) return undefined;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(cleaned)) return cleaned;
   const parsed = new Date(`${cleaned}, 2026 12:00 UTC`);
   return Number.isNaN(parsed.getTime())
     ? undefined
@@ -63,13 +65,15 @@ export default function PostRolePage() {
     mode: WorkType;
     address: string;
     impact: string;
+    description: string;
+    minAgeText: string;
     flags: string[];
   } | null>(null);
 
   // Prefill from the draft once the store has hydrated.
   const f = form ?? {
     title: draft?.title ?? "",
-    dateText: "",
+    dateText: draft?.date ?? "",
     timeText: "",
     spots: draft?.spots ?? 6,
     taught: draft?.skillsTaught ?? [],
@@ -77,14 +81,28 @@ export default function PostRolePage() {
     mode: draft?.workType ?? "On-site",
     address: draft?.address ?? "",
     impact: draft?.impact ?? "",
+    description: draft?.description ?? "",
+    minAgeText: draft?.minAge ? String(draft.minAge) : "",
     flags: [
       ...(draft?.trainingProvided ? ["Training provided"] : []),
       ...(draft?.goodForGroups ? ["Good for groups"] : []),
       ...(draft?.backgroundCheck ? ["Background check"] : []),
+      ...(draft?.minAge ? ["Minimum age"] : []),
     ],
   };
 
   const [error, setError] = useState<string | null>(null);
+  const [skillsOpen, setSkillsOpen] = useState(false);
+  const [skillQuery, setSkillQuery] = useState("");
+
+  // 7 chips up front (selected ones always visible); More... browses the rest
+  const visibleTaught = [
+    ...state.skills.learn.slice(0, 7),
+    ...f.taught.filter((s) => !state.skills.learn.slice(0, 7).includes(s)),
+  ];
+  const browsableSkills = state.skills.learn.filter((s) =>
+    s.toLowerCase().includes(skillQuery.trim().toLowerCase())
+  );
 
   const set = (patch: Partial<typeof f>) => setForm({ ...f, ...patch });
   const toggleIn = (key: "taught" | "needed" | "flags", label: string) =>
@@ -105,29 +123,31 @@ export default function PostRolePage() {
       start,
       end,
       neighborhood: org?.neighborhood ?? "",
-      address: f.address.trim() || undefined,
+      address: f.mode === "Remote" ? undefined : f.address.trim() || undefined,
       verify: draft?.verify,
       workType: f.mode,
       spots: f.spots,
       baseFilled: draft?.baseFilled ?? 0,
-      skillsTaught: f.taught.filter((s) => s !== "Add your own"),
+      skillsTaught: f.taught,
       skillsNeeded: f.needed,
       impact: f.impact.trim() || undefined,
+      description: f.description.trim() || undefined,
       trainingProvided: f.flags.includes("Training provided") || undefined,
       goodForGroups: f.flags.includes("Good for groups") || undefined,
       backgroundCheck: f.flags.includes("Background check") || undefined,
-      // "Minimum age" stays cosmetic: no number field in the form, and we
-      // don't invent one (min age renders only when a role has minAge).
-      minAge: draft?.minAge,
+      minAge:
+        f.flags.includes("Minimum age") && Number(f.minAgeText) > 0
+          ? Number(f.minAgeText)
+          : undefined,
     };
   };
 
   const submit = () => {
     if (!f.title.trim()) {
-      setError("Give the role a title so volunteers know what they're signing up for.");
+      setError("Give the event a name so volunteers know what they're signing up for.");
       return;
     }
-    if (f.taught.filter((s) => s !== "Add your own").length === 0) {
+    if (f.taught.length === 0) {
       setError("Pick at least one skill they'll gain — it's what we match on.");
       return;
     }
@@ -185,12 +205,21 @@ export default function PostRolePage() {
 
       <div className="contents lg:grid lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start lg:gap-12">
       <div className="contents lg:flex lg:flex-col lg:gap-[22px]">
+      <button
+        type="button"
+        onClick={() => toast("Image upload is coming soon")}
+        className="flex h-24 flex-col items-center justify-center gap-1.5 rounded-input border-[1.5px] border-dashed border-[rgba(31,26,23,0.24)] bg-white/50 text-[13px] font-semibold text-muted"
+      >
+        <PlusIcon size={20} />
+        Add images
+      </button>
+
       <div className="flex flex-col gap-2">
         <label
           htmlFor="title"
           className="text-[13px] font-semibold uppercase tracking-[0.4px] text-muted"
         >
-          Role title
+          Event name
         </label>
         <input
           id="title"
@@ -211,8 +240,7 @@ export default function PostRolePage() {
           </label>
           <input
             id="date"
-            type="text"
-            placeholder="Sat, Oct 3"
+            type="date"
             value={f.dateText}
             onChange={(e) => set({ dateText: e.target.value })}
             className="h-13 rounded-input border border-line-strong bg-[rgba(255,255,255,0.8)] px-4 text-base text-ink"
@@ -239,7 +267,7 @@ export default function PostRolePage() {
       <div className="flex items-center justify-between rounded-[11px] border border-line bg-[rgba(255,255,255,0.8)] px-4 py-3.5">
         <div className="flex flex-col gap-0.5">
           <div className="text-base font-semibold">Volunteers needed</div>
-          <div className="text-[13px] text-muted">We stop requests when it&apos;s full</div>
+          <div className="text-[13px] text-muted">We keep waitlists when it&apos;s full</div>
         </div>
         <div className="flex items-center gap-3">
           <button
@@ -271,8 +299,8 @@ export default function PostRolePage() {
             This is what we match on. Roles with at least one get seen more.
           </div>
         </div>
-        <div className="flex flex-wrap gap-2">
-          {state.skills.learn.map((label) => (
+        <div className="flex flex-wrap items-center gap-2">
+          {visibleTaught.map((label) => (
             <Chip
               key={label}
               label={label}
@@ -280,11 +308,13 @@ export default function PostRolePage() {
               onToggle={() => toggleIn("taught", label)}
             />
           ))}
-          <Chip
-            label="Add your own"
-            on={false}
-            onToggle={() => toast("Custom skills are coming soon")}
-          />
+          <button
+            type="button"
+            onClick={() => setSkillsOpen(true)}
+            className="px-1 py-2 text-[13px] font-semibold text-accent-ink"
+          >
+            More...
+          </button>
         </div>
       </div>
 
@@ -313,15 +343,22 @@ export default function PostRolePage() {
           value={f.mode}
           onChange={(mode) => set({ mode })}
         />
-        <label htmlFor="addr" className="sr-only">
-          Address
+        <label
+          htmlFor="addr"
+          className={`pt-1 text-[13px] font-semibold uppercase tracking-[0.4px] ${
+            f.mode === "Remote" ? "text-muted/50" : "text-muted"
+          }`}
+        >
+          Location
         </label>
         <input
           id="addr"
           type="text"
           value={f.address}
           onChange={(e) => set({ address: e.target.value })}
-          className="h-13 rounded-input border border-line-strong bg-[rgba(255,255,255,0.8)] px-4 text-base text-ink"
+          disabled={f.mode === "Remote"}
+          placeholder={f.mode === "Remote" ? "No location needed for remote roles" : ""}
+          className="h-13 rounded-input border border-line-strong bg-[rgba(255,255,255,0.8)] px-4 text-base text-ink disabled:border-line disabled:bg-white/40 disabled:text-muted/60"
         />
       </div>
 
@@ -342,6 +379,23 @@ export default function PostRolePage() {
         />
       </div>
 
+      <div className="flex flex-col gap-2">
+        <label
+          htmlFor="about"
+          className="text-[13px] font-semibold uppercase tracking-[0.4px] text-muted"
+        >
+          About
+        </label>
+        <textarea
+          id="about"
+          rows={6}
+          placeholder="Tell volunteers what the day looks like — schedule, what to bring, who they'll meet. Line breaks are kept."
+          value={f.description}
+          onChange={(e) => set({ description: e.target.value })}
+          className="resize-none rounded-input border border-line-strong bg-[rgba(255,255,255,0.8)] px-4 py-3.5 text-base leading-[1.4] text-ink"
+        />
+      </div>
+
       <div className="grid grid-cols-2 gap-2">
         {FLAGS.map((label) => (
           <label
@@ -355,6 +409,19 @@ export default function PostRolePage() {
               className="size-[18px] accent-ink"
             />
             {label}
+            {label === "Minimum age" && f.flags.includes("Minimum age") && (
+              <input
+                type="number"
+                min={1}
+                max={99}
+                value={f.minAgeText}
+                onChange={(e) => set({ minAgeText: e.target.value })}
+                onClick={(e) => e.stopPropagation()}
+                aria-label="Minimum age"
+                placeholder="16"
+                className="ml-auto h-9 w-14 rounded-[8px] border border-line-strong bg-white px-2 text-center text-sm text-ink"
+              />
+            )}
           </label>
         ))}
       </div>
@@ -383,11 +450,69 @@ export default function PostRolePage() {
           orgColor={org?.color}
           neighborhood={org?.neighborhood}
           workType={f.mode}
-          taught={f.taught.filter((s) => s !== "Add your own")}
+          taught={f.taught}
           spots={f.spots}
         />
       </div>
       </div>
+
+      {skillsOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center px-6"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Browse skills"
+        >
+          <button
+            type="button"
+            aria-label="Close"
+            onClick={() => setSkillsOpen(false)}
+            className="absolute inset-0 bg-ink/30"
+          />
+          <div className="relative flex max-h-[70vh] w-full max-w-90 flex-col gap-3 overflow-hidden rounded-card border border-line bg-white p-4 shadow-card">
+            <div className="flex h-11 items-center gap-2.5 rounded-full border border-line-strong bg-ground px-4">
+              <SearchIcon size={16} className="text-muted" />
+              <label htmlFor="skill-q" className="sr-only">
+                Search skills
+              </label>
+              <input
+                id="skill-q"
+                type="search"
+                autoFocus
+                value={skillQuery}
+                onChange={(e) => setSkillQuery(e.target.value)}
+                placeholder="Search skills"
+                className="min-w-0 grow bg-transparent text-[15px] text-ink outline-none placeholder:text-muted/70"
+              />
+            </div>
+            <div className="flex flex-wrap gap-2 overflow-y-auto">
+              {browsableSkills.map((label) => (
+                <Chip
+                  key={label}
+                  label={label}
+                  on={f.taught.includes(label)}
+                  onToggle={() => toggleIn("taught", label)}
+                />
+              ))}
+              {browsableSkills.length === 0 && (
+                <div className="py-2 text-sm text-muted">
+                  No skills match &ldquo;{skillQuery.trim()}&rdquo;.
+                </div>
+              )}
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                setSkillsOpen(false);
+                setSkillQuery("");
+              }}
+              className="h-12 rounded-full bg-ink text-[15px] font-semibold text-white"
+            >
+              Done
+            </button>
+          </div>
+        </div>
+      )}
     </main>
     </>
   );
