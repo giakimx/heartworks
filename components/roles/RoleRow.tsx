@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { OrgAvatar } from "@/components/ui/Avatar";
 import { metaDate } from "@/lib/format";
 import { imageFor } from "@/lib/images";
 import type { Org, Role } from "@/lib/types";
@@ -26,8 +27,17 @@ export default function RoleRow({
       className="flex items-center gap-3.5 border-t border-line py-3.5 text-ink no-underline"
     >
       <div className="flex min-w-0 grow flex-col gap-[5px]">
-        <div className="text-[13px] font-medium text-muted">
-          {[metaDate(role.date), org?.name].filter(Boolean).join(" · ")}
+        <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[13px] font-medium text-muted">
+          {metaDate(role.date) && (
+            <span className="whitespace-nowrap">{metaDate(role.date)}</span>
+          )}
+          {metaDate(role.date) && org && <span>·</span>}
+          {org && (
+            <span className="flex items-center gap-1.5">
+              <OrgAvatar org={org} size={16} />
+              {org.name}
+            </span>
+          )}
         </div>
         <div className="text-[17px] font-semibold leading-[1.25]">{role.title}</div>
         <div className="flex items-center gap-2 text-[13px] text-muted">
