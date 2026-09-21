@@ -174,7 +174,7 @@ export default function DiscoverPage() {
                 role={role}
                 org={orgById(state, role.orgId)}
                 learnTag={matchedLearnTags(role, volunteer, 1)[0]}
-                spotsText={spotsLabel(role.spots - filledCount(role, state.applications))}
+                spotsText={spotsLabel(filledCount(role, state.applications), role.spots)}
               />
             ))}
             {results.length === 0 && (
@@ -227,7 +227,7 @@ export default function DiscoverPage() {
                   role={role}
                   org={orgById(state, role.orgId)}
                   learnTag={matchedLearnTags(role, volunteer, 1)[0]}
-                  spotsText={spotsLabel(role.spots - filledCount(role, state.applications))}
+                  spotsText={spotsLabel(filledCount(role, state.applications), role.spots)}
                 />
               ))}
             </div>
@@ -290,7 +290,7 @@ export default function DiscoverPage() {
                   role={role}
                   org={orgById(state, role.orgId)}
                   learnTag={matchedLearnTags(role, volunteer, 1)[0]}
-                  spotsText={spotsLabel(role.spots - filledCount(role, state.applications))}
+                  spotsText={spotsLabel(filledCount(role, state.applications), role.spots)}
                 />
               ))}
             </section>

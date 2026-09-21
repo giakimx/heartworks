@@ -144,7 +144,8 @@ export default function OrgProfilePage() {
                   role={role}
                   learnTag={matchedLearnTags(role, volunteer, 1)[0]}
                   spotsText={spotsLabel(
-                    role.spots - filledCount(role, state.applications)
+                    filledCount(role, state.applications),
+                    role.spots
                   )}
                 />
               ))}

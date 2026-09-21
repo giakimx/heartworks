@@ -74,7 +74,7 @@ export default function FeatureRoleCard({
           <div className="flex items-center gap-2.5">
             <ProgressBar filled={filled} total={role.spots} className="w-21" />
             <div className="text-[13px] text-muted">
-              {spotsLabel(role.spots - filled)}
+              {spotsLabel(filled, role.spots)}
             </div>
           </div>
           <div className="flex h-9 items-center rounded-full bg-ink px-4 text-sm font-semibold text-white">

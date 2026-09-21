@@ -1,5 +1,4 @@
 import Tag from "@/components/ui/Tag";
-import { spotsLabel } from "@/lib/format";
 
 // Live preview beside the desktop post-a-role form (DPostRole).
 export default function RolePreviewCard({
@@ -44,7 +43,9 @@ export default function RolePreviewCard({
           <div className="text-[13px] text-muted">Learn tags show up here</div>
         )}
       </div>
-      <div className="text-[13px] text-muted">{spotsLabel(spots)}</div>
+      <div className="text-[13px] text-muted">
+        {spots} {spots === 1 ? "volunteer" : "volunteers"} needed
+      </div>
     </div>
   );
 }

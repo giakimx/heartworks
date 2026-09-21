@@ -25,7 +25,7 @@ import {
   formatDate,
   metaDate,
   monthAbbrev,
-  spotsLabel,
+  spotsLeftLabel,
   timeRange,
   timeRangeWithHours,
 } from "@/lib/format";
@@ -143,7 +143,7 @@ function RoleView({
             {filled} of {role.spots} going
           </div>
         </div>
-        <div className="text-[13px] text-muted">{spotsLabel(left)}</div>
+        <div className="text-[13px] text-muted">{spotsLeftLabel(left)}</div>
       </div>
       <ProgressBar filled={filled} total={role.spots} />
       <RegisterActions role={role} org={org} application={application} left={left} />

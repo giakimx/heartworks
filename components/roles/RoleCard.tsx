@@ -18,7 +18,7 @@ export default function RoleCard({
   applications: Application[];
 }) {
   const image = imageFor(role.image);
-  const left = role.spots - filledCount(role, applications);
+  const filled = filledCount(role, applications);
   return (
     <Link
       href={`/roles/${role.id}` as never}
@@ -53,7 +53,7 @@ export default function RoleCard({
           ) : (
             <div />
           )}
-          <div className="text-muted">{spotsLabel(left)}</div>
+          <div className="text-muted">{spotsLabel(filled, role.spots)}</div>
         </div>
       </div>
     </Link>

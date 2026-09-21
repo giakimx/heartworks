@@ -49,7 +49,14 @@ export function timeRangeWithHours(
   return hours ? `${range} (${hours} ${hours === 1 ? "hour" : "hours"})` : range;
 }
 
-export function spotsLabel(spotsLeft: number): string {
+// Discovery surfaces show momentum ("5/7 going" = social proof) rather than
+// scarcity; scarcity ("n spots left") lives only on the register card.
+export function spotsLabel(filled: number, spots: number): string {
+  if (spots - filled <= 0) return "Full · join waitlist";
+  return `${filled}/${spots} going`;
+}
+
+export function spotsLeftLabel(spotsLeft: number): string {
   if (spotsLeft <= 0) return "Full · join waitlist";
   if (spotsLeft === 1) return "1 spot left";
   return `${spotsLeft} spots left`;

@@ -12,7 +12,7 @@ import {
   searchRoles,
   verifiedSkills,
 } from "@/lib/selectors";
-import { spotsLabel } from "@/lib/format";
+import { spotsLabel, spotsLeftLabel } from "@/lib/format";
 
 describe("derived values on the untouched seed", () => {
   it("r_paint shows 4 of 7 — requested applications never count as filled", () => {
@@ -94,9 +94,15 @@ describe("search", () => {
 });
 
 describe("spots label", () => {
-  it("covers the three variants", () => {
-    expect(spotsLabel(3)).toBe("3 spots left");
-    expect(spotsLabel(1)).toBe("1 spot left");
-    expect(spotsLabel(0)).toBe("Full · join waitlist");
+  it("shows momentum on discovery surfaces and the waitlist when full", () => {
+    expect(spotsLabel(4, 7)).toBe("4/7 going");
+    expect(spotsLabel(0, 6)).toBe("0/6 going");
+    expect(spotsLabel(10, 10)).toBe("Full · join waitlist");
+  });
+
+  it("keeps the scarcity variant for the register card", () => {
+    expect(spotsLeftLabel(3)).toBe("3 spots left");
+    expect(spotsLeftLabel(1)).toBe("1 spot left");
+    expect(spotsLeftLabel(0)).toBe("Full · join waitlist");
   });
 });
