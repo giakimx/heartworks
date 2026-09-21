@@ -5,7 +5,21 @@ import { useState } from "react";
 import TabBar from "@/components/chrome/TabBar";
 import { VolunteerTopNav } from "@/components/chrome/TopNav";
 import Wordmark from "@/components/chrome/Wordmark";
-import { SearchIcon } from "@/components/icons";
+import {
+  BookIcon,
+  BrushIcon,
+  CalendarIcon,
+  ChatIcon,
+  FileTextIcon,
+  HammerIcon,
+  ListIcon,
+  MegaphoneIcon,
+  PawIcon,
+  RollerIcon,
+  SearchIcon,
+  SproutIcon,
+  UsersIcon,
+} from "@/components/icons";
 import FeatureRoleCard from "@/components/roles/FeatureRoleCard";
 import RoleCard from "@/components/roles/RoleCard";
 import RoleRow from "@/components/roles/RoleRow";
@@ -19,6 +33,21 @@ const FILTERS = ["For you", "This week", "Near me", "Groups", "Remote"];
 
 // browse tile icon fills, cycled (the avatar palette from the design system)
 const TILE_COLORS = ["#F2B8A0", "#C9B8E8", "#A9D4B8", "#F3D48A"];
+
+const SKILL_ICONS: Record<string, React.ComponentType<{ size?: number }>> = {
+  "Mural painting": BrushIcon,
+  Gardening: SproutIcon,
+  "Grant writing": FileTextIcon,
+  "Event planning": CalendarIcon,
+  Tutoring: BookIcon,
+  Carpentry: HammerIcon,
+  Organizing: ListIcon,
+  "Animal care": PawIcon,
+  "Surface prep": RollerIcon,
+  Teamwork: UsersIcon,
+  "Public speaking": MegaphoneIcon,
+  "Customer service": ChatIcon,
+};
 
 // Within the next 7 days of the viewer's "today" (parsed at local noon so
 // bare ISO dates don't shift a day).
@@ -266,21 +295,25 @@ export default function DiscoverPage() {
           />
         )}
 
-        {/* popular events: one compact list, two columns on desktop */}
+        {/* popular events: horizontal card carousel, three per view on desktop */}
         {hydrated && !searching && !filter && rest.length > 0 && (
-          <section className="flex flex-col gap-1 lg:gap-2">
-            <h2 className="pb-1 font-display text-xl font-normal lg:text-2xl">
+          <section className="flex flex-col gap-3 lg:gap-4">
+            <h2 className="font-display text-xl font-normal lg:text-2xl">
               Popular events
             </h2>
-            <div className="flex flex-col gap-1 lg:grid lg:grid-cols-2 lg:gap-x-12">
+            <div className="-mr-6 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 pr-6 [scrollbar-width:none] lg:mx-0 lg:gap-5 lg:px-0">
               {rest.map((role) => (
-                <RoleRow
+                <div
                   key={role.id}
-                  role={role}
-                  org={orgById(state, role.orgId)}
-                  learnTag={matchedLearnTags(role, volunteer, 1)[0]}
-                  spotsText={spotsLabel(filledCount(role, state.applications), role.spots)}
-                />
+                  className="w-[78%] shrink-0 snap-start sm:w-[46%] lg:w-[calc((100%-40px)/3)]"
+                >
+                  <RoleCard
+                    role={role}
+                    org={orgById(state, role.orgId)}
+                    learnTag={matchedLearnTags(role, volunteer, 1)[0]}
+                    applications={state.applications}
+                  />
+                </div>
               ))}
             </div>
           </section>
@@ -305,10 +338,17 @@ export default function DiscoverPage() {
                 >
                   <span
                     aria-hidden="true"
-                    className="flex size-9 shrink-0 items-center justify-center rounded-full text-sm font-bold text-ink/70"
+                    className="flex size-9 shrink-0 items-center justify-center rounded-full text-ink/70"
                     style={{ background: TILE_COLORS[i % TILE_COLORS.length] }}
                   >
-                    {skill[0]}
+                    {(() => {
+                      const SkillIcon = SKILL_ICONS[skill];
+                      return SkillIcon ? (
+                        <SkillIcon size={17} />
+                      ) : (
+                        <span className="text-sm font-bold">{skill[0]}</span>
+                      );
+                    })()}
                   </span>
                   <span className="flex min-w-0 flex-col">
                     <span className="truncate text-sm font-semibold text-ink">

@@ -165,6 +165,111 @@ export function GlobeIcon(props: IconProps) {
   );
 }
 
+// Skill icons for the browse tiles, same 24-viewBox stroke style.
+
+export function BrushIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M17 3l4 4L8.5 19.5 3 21l1.5-5.5L17 3z" />
+      <path d="M14.5 5.5l4 4" />
+    </Icon>
+  );
+}
+
+export function SproutIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M12 21v-8" />
+      <path d="M12 13C12 9.8 9.4 7.5 6 7.5c0 3.6 2.6 5.5 6 5.5z" />
+      <path d="M12 13c0-3.2 2.6-5.5 6-5.5 0 3.6-2.6 5.5-6 5.5z" />
+    </Icon>
+  );
+}
+
+export function FileTextIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8l-5-5z" />
+      <path d="M14 3v5h5M9 13h6M9 17h4" />
+    </Icon>
+  );
+}
+
+export function BookIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M2 4h6a4 4 0 014 4v12a3 3 0 00-3-3H2V4z" />
+      <path d="M22 4h-6a4 4 0 00-4 4v12a3 3 0 013-3h7V4z" />
+    </Icon>
+  );
+}
+
+export function HammerIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M14.5 11.5L5 21l-2-2 9.5-9.5" />
+      <path d="M13 4l7 7 2-2-1.5-1.5a3 3 0 00-2-4.9L16 2l-3 2z" />
+    </Icon>
+  );
+}
+
+export function PawIcon({ size = 18, ...props }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      stroke="none"
+      aria-hidden="true"
+      {...props}
+    >
+      <circle cx="6" cy="10" r="1.8" />
+      <circle cx="12" cy="7.5" r="1.9" />
+      <circle cx="18" cy="10" r="1.8" />
+      <path d="M12 11.5c-3 0-5.3 2.4-5.3 4.8 0 1.7 1.2 2.9 2.7 2.9 1.1 0 1.6-.6 2.6-.6s1.5.6 2.6.6c1.5 0 2.7-1.2 2.7-2.9 0-2.4-2.3-4.8-5.3-4.8z" />
+    </svg>
+  );
+}
+
+export function RollerIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <rect x="3" y="4" width="13" height="5" rx="1.5" />
+      <path d="M16 6.5h3.5V11H12v3.5" />
+      <path d="M12 14.5V21" />
+    </Icon>
+  );
+}
+
+export function UsersIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <circle cx="9" cy="8" r="3.5" />
+      <path d="M2.5 20c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5" />
+      <path d="M16.5 4.8a3.5 3.5 0 010 6.4M18 14.8c2.1.8 3.5 2.6 3.5 5.2" />
+    </Icon>
+  );
+}
+
+export function MegaphoneIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M3 10.5L19 5v13L3 13.5v-3z" />
+      <path d="M7 14v4a2 2 0 002 2h1" />
+    </Icon>
+  );
+}
+
+export function ChatIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M21 11.5a8.5 8.5 0 01-8.5 8.5c-1.6 0-3.1-.4-4.4-1.2L3 20l1.2-5.1A8.5 8.5 0 1121 11.5z" />
+      <path d="M8.5 12.5c.9.9 2.1 1.4 3.5 1.4s2.6-.5 3.5-1.4" />
+    </Icon>
+  );
+}
+
 export function ExportIcon(props: IconProps) {
   return (
     <Icon {...props}>
