@@ -33,7 +33,7 @@ export default function RoleRow({
         <div className="flex items-center gap-2 text-[13px] text-muted">
           {learnTag && (
             <div className="rounded-md border border-accent-ink/30 px-1.5 py-0.5 text-xs font-semibold text-accent-ink">
-              Learn · {learnTag}
+              {learnTag}
             </div>
           )}
           {spotsText && <div>{spotsText}</div>}

@@ -48,7 +48,7 @@ export default function RoleCard({
         <div className="flex items-center justify-between pt-1 text-[13px]">
           {learnTag ? (
             <div className="rounded-md border border-accent-ink/30 px-1.5 py-0.5 text-xs font-semibold text-accent-ink">
-              Learn · {learnTag}
+              {learnTag}
             </div>
           ) : (
             <div />
