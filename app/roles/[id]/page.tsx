@@ -207,6 +207,25 @@ function RoleView({
         </button>
       </div>
 
+      {role.impact && (
+        <section className="relative overflow-hidden rounded-card border border-accent/25 bg-gradient-to-br from-accent-tint via-[#FDEDE2] to-[#FCEBCB] p-4 shadow-[0_1px_2px_rgba(217,88,59,0.06),0_12px_32px_rgba(217,88,59,0.12)]">
+          {/* soft shine sweep across the card */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -inset-y-8 -left-1/4 w-1/3 rotate-12 bg-white/35 blur-xl"
+          />
+          <div className="relative flex flex-col gap-2">
+            <div className="flex items-center gap-1.5">
+              <HeartFilledIcon size={13} className="text-accent" />
+              <h2 className="text-[11px] font-semibold uppercase tracking-[0.4px] text-accent-ink">
+                Community impact
+              </h2>
+            </div>
+            <p className="text-sm leading-normal text-ink">{role.impact}</p>
+          </div>
+        </section>
+      )}
+
       <section className="flex flex-col gap-2.5">
         <h2 className="text-[11px] font-semibold uppercase tracking-[0.4px] text-muted opacity-80">
           You&apos;ll build
@@ -236,25 +255,6 @@ function RoleView({
           </div>
         )}
       </section>
-
-      {role.impact && (
-        <section className="relative overflow-hidden rounded-card border border-accent/25 bg-gradient-to-br from-accent-tint via-[#FDEDE2] to-[#FCEBCB] p-4 shadow-[0_1px_2px_rgba(217,88,59,0.06),0_12px_32px_rgba(217,88,59,0.12)]">
-          {/* soft shine sweep across the card */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -inset-y-8 -left-1/4 w-1/3 rotate-12 bg-white/35 blur-xl"
-          />
-          <div className="relative flex flex-col gap-2">
-            <div className="flex items-center gap-1.5">
-              <HeartFilledIcon size={13} className="text-accent" />
-              <h2 className="text-[11px] font-semibold uppercase tracking-[0.4px] text-accent-ink">
-                Community impact
-              </h2>
-            </div>
-            <p className="text-sm leading-normal text-ink">{role.impact}</p>
-          </div>
-        </section>
-      )}
 
       {role.description && (
         <section className="flex flex-col gap-2">
