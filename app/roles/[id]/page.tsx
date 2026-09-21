@@ -241,17 +241,10 @@ function RoleView({
             </div>
           ))}
         </div>
-        {hydrated && (
+        {hydrated && matchCount > 0 && (
           <div className="text-sm leading-normal text-muted">
-            {matchCount > 0 && (
-              <>
-                {COUNT_WORDS[matchCount] ?? matchCount}{" "}
-                {matchCount === 1 ? "matches" : "match"} your goals.{" "}
-              </>
-            )}
-            <span className="text-xs">
-              Logged to your profile once the org confirms your shift.
-            </span>
+            {COUNT_WORDS[matchCount] ?? matchCount}{" "}
+            {matchCount === 1 ? "matches" : "match"} your goals.
           </div>
         )}
       </section>
