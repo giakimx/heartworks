@@ -6,17 +6,21 @@ export function Chip({
   label,
   on,
   onToggle,
+  small = false,
 }: {
   label: string;
   on: boolean;
   onToggle: () => void;
+  small?: boolean;
 }) {
   return (
     <button
       type="button"
       aria-pressed={on}
       onClick={onToggle}
-      className={`h-11 rounded-full px-4 text-[15px] font-medium transition-colors duration-150 ease-out ${
+      className={`rounded-full font-medium transition-colors duration-150 ease-out ${
+        small ? "h-[35px] px-3 text-[13px]" : "h-11 px-4 text-[15px]"
+      } ${
         on
           ? "border border-ink bg-ink text-white"
           : "border border-[rgba(31,26,23,0.12)] bg-card-soft text-ink"

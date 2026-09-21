@@ -215,27 +215,22 @@ export default function PostRolePage() {
       </button>
 
       <div className="flex flex-col gap-2">
-        <label
-          htmlFor="title"
-          className="text-[13px] font-semibold uppercase tracking-[0.4px] text-muted"
-        >
+        <label htmlFor="title" className="sr-only">
           Event name
         </label>
         <input
           id="title"
           type="text"
+          placeholder="Event name"
           value={f.title}
           onChange={(e) => set({ title: e.target.value })}
-          className="h-13 rounded-input border border-line-strong bg-[rgba(255,255,255,0.8)] px-4 text-base text-ink"
+          className="h-13 rounded-input border border-line-strong bg-[rgba(255,255,255,0.8)] px-4 text-base text-ink placeholder:text-muted/70"
         />
       </div>
 
       <div className="grid grid-cols-2 gap-2.5">
         <div className="flex flex-col gap-2">
-          <label
-            htmlFor="date"
-            className="text-[13px] font-semibold uppercase tracking-[0.4px] text-muted"
-          >
+          <label htmlFor="date" className="sr-only">
             Date
           </label>
           <input
@@ -247,10 +242,7 @@ export default function PostRolePage() {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label
-            htmlFor="time"
-            className="text-[13px] font-semibold uppercase tracking-[0.4px] text-muted"
-          >
+          <label htmlFor="time" className="sr-only">
             Time
           </label>
           <input
@@ -259,7 +251,7 @@ export default function PostRolePage() {
             placeholder="10 AM to 1 PM"
             value={f.timeText}
             onChange={(e) => set({ timeText: e.target.value })}
-            className="h-13 rounded-input border border-line-strong bg-[rgba(255,255,255,0.8)] px-4 text-base text-ink"
+            className="h-13 rounded-input border border-line-strong bg-[rgba(255,255,255,0.8)] px-4 text-base text-ink placeholder:text-muted/70"
           />
         </div>
       </div>
@@ -274,18 +266,18 @@ export default function PostRolePage() {
             type="button"
             aria-label="One fewer"
             onClick={() => set({ spots: Math.max(1, f.spots - 1) })}
-            className="flex size-11 items-center justify-center rounded-full border border-line-strong bg-ground text-ink"
+            className="flex size-9 items-center justify-center rounded-full border border-line-strong bg-ground text-ink"
           >
-            <MinusIcon size={18} strokeWidth={2.4} />
+            <MinusIcon size={16} strokeWidth={2.4} />
           </button>
           <div className="min-w-6 text-center font-display text-2xl">{f.spots}</div>
           <button
             type="button"
             aria-label="One more"
             onClick={() => set({ spots: Math.min(99, f.spots + 1) })}
-            className="flex size-11 items-center justify-center rounded-full border border-line-strong bg-ground text-ink"
+            className="flex size-9 items-center justify-center rounded-full border border-line-strong bg-ground text-ink"
           >
-            <PlusIcon size={18} strokeWidth={2.4} />
+            <PlusIcon size={16} strokeWidth={2.4} />
           </button>
         </div>
       </div>
@@ -304,6 +296,7 @@ export default function PostRolePage() {
             <Chip
               key={label}
               label={label}
+              small
               on={f.taught.includes(label)}
               onToggle={() => toggleIn("taught", label)}
             />
@@ -327,6 +320,7 @@ export default function PostRolePage() {
             <Chip
               key={label}
               label={label}
+              small
               on={f.needed.includes(label)}
               onToggle={() => toggleIn("needed", label)}
             />
@@ -335,20 +329,13 @@ export default function PostRolePage() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <div className="text-[13px] font-semibold uppercase tracking-[0.4px] text-muted">
-          Where
-        </div>
         <Segmented
           options={["On-site", "Hybrid", "Remote"] as const}
           value={f.mode}
           onChange={(mode) => set({ mode })}
+          small
         />
-        <label
-          htmlFor="addr"
-          className={`pt-1 text-[13px] font-semibold uppercase tracking-[0.4px] ${
-            f.mode === "Remote" ? "text-muted/50" : "text-muted"
-          }`}
-        >
+        <label htmlFor="addr" className="sr-only">
           Location
         </label>
         <input
@@ -357,42 +344,38 @@ export default function PostRolePage() {
           value={f.address}
           onChange={(e) => set({ address: e.target.value })}
           disabled={f.mode === "Remote"}
-          placeholder={f.mode === "Remote" ? "No location needed for remote roles" : ""}
-          className="h-13 rounded-input border border-line-strong bg-[rgba(255,255,255,0.8)] px-4 text-base text-ink disabled:border-line disabled:bg-white/40 disabled:text-muted/60"
+          placeholder={
+            f.mode === "Remote" ? "No location needed for remote roles" : "Location"
+          }
+          className="h-13 rounded-input border border-line-strong bg-[rgba(255,255,255,0.8)] px-4 text-base text-ink placeholder:text-muted/70 disabled:border-line disabled:bg-white/40 disabled:text-muted/60"
         />
       </div>
 
       <div className="flex flex-col gap-2">
-        <label
-          htmlFor="impact"
-          className="text-[13px] font-semibold uppercase tracking-[0.4px] text-muted"
-        >
-          Community impact, one sentence
+        <label htmlFor="impact" className="sr-only">
+          Community impact
         </label>
         <textarea
           id="impact"
           rows={3}
-          placeholder="What changes in the neighborhood because this got done?"
+          placeholder="Community impact, one sentence — what changes in the neighborhood because this got done?"
           value={f.impact}
           onChange={(e) => set({ impact: e.target.value })}
-          className="resize-none rounded-input border border-line-strong bg-[rgba(255,255,255,0.8)] px-4 py-3.5 text-base leading-[1.4] text-ink"
+          className="resize-none rounded-input border border-line-strong bg-[rgba(255,255,255,0.8)] px-4 py-3.5 text-base leading-[1.4] text-ink placeholder:text-muted/70"
         />
       </div>
 
       <div className="flex flex-col gap-2">
-        <label
-          htmlFor="about"
-          className="text-[13px] font-semibold uppercase tracking-[0.4px] text-muted"
-        >
+        <label htmlFor="about" className="sr-only">
           About
         </label>
         <textarea
           id="about"
           rows={6}
-          placeholder="Tell volunteers what the day looks like — schedule, what to bring, who they'll meet. Line breaks are kept."
+          placeholder="About — what the day looks like: schedule, what to bring, who they'll meet."
           value={f.description}
           onChange={(e) => set({ description: e.target.value })}
-          className="resize-none rounded-input border border-line-strong bg-[rgba(255,255,255,0.8)] px-4 py-3.5 text-base leading-[1.4] text-ink"
+          className="resize-none rounded-input border border-line-strong bg-[rgba(255,255,255,0.8)] px-4 py-3.5 text-base leading-[1.4] text-ink placeholder:text-muted/70"
         />
       </div>
 
@@ -437,7 +420,7 @@ export default function PostRolePage() {
       <button
         type="button"
         onClick={submit}
-        className="flex h-14 items-center justify-center rounded-full bg-ink text-base font-semibold text-white"
+        className="flex h-11 items-center justify-center rounded-full bg-ink text-[15px] font-semibold text-white"
       >
         Post role
       </button>
@@ -490,6 +473,7 @@ export default function PostRolePage() {
                 <Chip
                   key={label}
                   label={label}
+                  small
                   on={f.taught.includes(label)}
                   onToggle={() => toggleIn("taught", label)}
                 />
@@ -506,7 +490,7 @@ export default function PostRolePage() {
                 setSkillsOpen(false);
                 setSkillQuery("");
               }}
-              className="h-12 rounded-full bg-ink text-[15px] font-semibold text-white"
+              className="h-10 rounded-full bg-ink text-sm font-semibold text-white"
             >
               Done
             </button>
